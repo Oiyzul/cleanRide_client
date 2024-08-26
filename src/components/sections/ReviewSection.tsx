@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import MaxWidthWrapper from "../MaxWidthWrapper";
 import { Button } from "../ui/button";
+import { useAppSelector } from "@/redux/hooks";
+import { selectToken } from "@/redux/features/auth/authSlice";
 
 const ReviewSection = () => {
   const [feedback, setFeedback] = useState("");
@@ -24,7 +26,8 @@ const ReviewSection = () => {
         "Service was average, but the atmosphere was good. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione ipsa quo itaque. Eos necessitatibus dolorem, aliquid ullam nam excepturi? Reiciendis?",
     },
   ]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Change this based on actual login status
+  
+  const token = useAppSelector(selectToken)
 
   const handleRating = (value) => {
     setRating(value);
@@ -47,7 +50,7 @@ const ReviewSection = () => {
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center pt-5 pb-10">
-      {!isLoggedIn && (
+      {!token && (
         <motion.div
           className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center"
           initial={{ opacity: 0 }}

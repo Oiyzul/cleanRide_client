@@ -4,19 +4,23 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import { Button } from "./ui/button";
-import { useAppSelector } from "@/redux/hooks";
-import { selectUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout, selectUser } from "@/redux/features/auth/authSlice";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   const user = useAppSelector(selectUser)
+ 
+  const dispatch = useAppDispatch()
 
   const onToggle = () => {
     setOpen((prev) => !prev);
   };
 
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <header className="bg-gray-800 text-white relative">
