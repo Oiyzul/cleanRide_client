@@ -4,13 +4,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import { Button } from "./ui/button";
+import { useAppSelector } from "@/redux/hooks";
+import { selectUser } from "@/redux/features/auth/authSlice";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
-  let user = {
-    // role: "admin",
-  };
+  const user = useAppSelector(selectUser)
+
   const onToggle = () => {
     setOpen((prev) => !prev);
   };
@@ -33,7 +34,7 @@ const Navbar = () => {
                 <li className="text-gray-200 hover:text-white">
                   <Link to="/bookings">Booking</Link>
                 </li>
-                {user.role ? (
+                {user?.role ? (
                   <>
                     <li className="text-gray-200 hover:text-white">
                       <Link to={`/${user.role}/dashboard`}>Dashboard</Link>
