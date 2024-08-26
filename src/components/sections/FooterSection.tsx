@@ -1,6 +1,7 @@
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import MaxWidthWrapper from "../MaxWidthWrapper";
 import { Link } from "react-router-dom";
+import ScrollToTop from "../ScrollToTop";
 
 const FooterSection = () => {
   return (
@@ -35,6 +36,8 @@ const FooterSection = () => {
         <div className="mt-8 text-center">
           © {new Date().getFullYear()} CarWash. All rights reserved.
         </div>
+
+        <ScrollToTop />
       </MaxWidthWrapper>
     </footer>
   );
