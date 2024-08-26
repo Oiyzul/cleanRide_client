@@ -2,7 +2,7 @@ import { useGetServicesQuery } from "@/redux/api/serviceApi";
 import MaxWidthWrapper from "../MaxWidthWrapper";
 import ServiceCard from "../ServiceCard";
 
-const Featured = () => {
+const FeaturedServicesSection = () => {
   const { data, isLoading, error } = useGetServicesQuery({});
 
   return (
@@ -23,4 +23,4 @@ const Featured = () => {
   );
 };
 
-export default Featured;
+export default FeaturedServicesSection;

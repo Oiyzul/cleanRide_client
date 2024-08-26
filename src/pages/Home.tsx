@@ -1,11 +1,15 @@
-import { Branding, Featured, Footer, Review } from "@/components";
-import { Button } from "@/components/ui/button";
+import {
+  BrandingSection,
+  FeaturedServicesSection,
+  ReviewSection,
+} from "@/components";
 
 const Home = () => {
   return (
     <div>
-      <Branding />
-      <Featured />
+      <BrandingSection />
+      <FeaturedServicesSection />
+      <ReviewSection />
     </div>
   );
 };

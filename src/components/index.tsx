@@ -1,6 +1,6 @@
-import Branding from "./sections/Branding";
-import Featured from "./sections/Featured";
+import BrandingSection from "./sections/BrandingSection";
+import FeaturedServicesSection from "./sections/FeaturedServicesSection";
 import Footer from "./Footer";
-import Review from "./Review";
+import ReviewSection from "./sections/ReviewSection";
 
-export { Branding, Featured, Footer, Review };
+export { BrandingSection, FeaturedServicesSection, Footer, ReviewSection };

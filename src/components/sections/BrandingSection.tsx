@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { CarouselPlugin } from "../ImageSlider";
 import { Button } from "../ui/button";
 
-const Branding = () => {
+const BrandingSection = () => {
   return (
     <div className="relative">
       <CarouselPlugin />
@@ -17,4 +17,4 @@ const Branding = () => {
   );
 };
 
-export default Branding;
+export default BrandingSection;

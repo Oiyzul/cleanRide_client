@@ -67,3 +67,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+.review-form {
+  @apply flex flex-col space-y-4;
+}
+
+.rating {
+  @apply flex items-center;
+}
+
+.overall-rating {
+  @apply text-center mt-4;
+}
+
+.recent-reviews {
+  @apply mt-4;
+}
