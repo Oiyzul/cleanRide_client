@@ -1,6 +1,7 @@
 import {
   BrandingSection,
   FeaturedServicesSection,
+  FooterSection,
   ReviewSection,
 } from "@/components";
 
@@ -10,6 +11,7 @@ const Home = () => {
       <BrandingSection />
       <FeaturedServicesSection />
       <ReviewSection />
+      <FooterSection />
     </div>
   );
 };

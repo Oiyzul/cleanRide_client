@@ -1,14 +1,8 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import MaxWidthWrapper from "../MaxWidthWrapper";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
-import { Car } from "lucide-react";
+import { Button } from "../ui/button";
 
 const ReviewSection = () => {
   const [feedback, setFeedback] = useState("");
@@ -16,18 +10,21 @@ const ReviewSection = () => {
   const [reviews, setReviews] = useState([
     {
       rating: 5,
-      feedback: "Excellent service, loved the atmosphere!",
+      feedback:
+        "Excellent service, loved the atmosphere! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione ipsa quo itaque. Eos necessitatibus dolorem, aliquid ullam nam excepturi? Reiciendis?",
     },
     {
       rating: 4,
-      feedback: "Good service, but the waiting area was not good.",
+      feedback:
+        "Good service, but the waiting area was not good. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione ipsa quo itaque. Eos necessitatibus dolorem, aliquid ullam nam excepturi? Reiciendis?",
     },
     {
       rating: 3,
-      feedback: "Service was average, but the atmosphere was good.",
+      feedback:
+        "Service was average, but the atmosphere was good. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione ipsa quo itaque. Eos necessitatibus dolorem, aliquid ullam nam excepturi? Reiciendis?",
     },
   ]);
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Change this based on actual login status
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Change this based on actual login status
 
   const handleRating = (value) => {
     setRating(value);
@@ -49,7 +46,22 @@ const ReviewSection = () => {
     : 0;
 
   return (
-    <section className="h-screen flex flex-col justify-center">
+    <section className="relative min-h-screen flex flex-col justify-center pt-5 pb-10">
+      {!isLoggedIn && (
+        <motion.div
+          className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Button
+            className="bg-white text-black px-8 py-2 rounded"
+            onClick={() => (window.location.href = "/login")}
+          >
+            Login
+          </Button>
+        </motion.div>
+      )}
       <MaxWidthWrapper className="">
         <div className="text-center">
           <p className="text-red-700 font-semibold mb-3">★ Our Leadership</p>
@@ -58,88 +70,71 @@ const ReviewSection = () => {
 
         <div className="my-10 ">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-
-          <div className="col-span-2 flex flex-col md:flex-row gap-5 flex-wrap">
-            {reviews.slice(-2).map((review, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="flex-1"
-              >
-                <div className="bg-white p-2 h-[180px] border rounded-md">
-                  <div className="flex gap-5 p-0">
-                    <img
-                      src="/carwash.jpg"
-                      alt=""
-                      className="w-32 h-36 object-cover rounded-2xl"
-                    />
-                    <div className="flex flex-col justify-between">
-                      {review.feedback}
-                      <div>
-                        <p className="font-semibold">John Doe</p>
-                        <p className="text-gray-300">Manager</p>
+            <div className="col-span-2 flex flex-col md:flex-row gap-5 flex-wrap">
+              {reviews.slice(-2).map((review, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex-1"
+                >
+                  <div className="bg-white p-2 h-[180px] border rounded-md">
+                    <div className="flex gap-5 p-0">
+                      <img
+                        src="/carwash.jpg"
+                        alt=""
+                        className="w-32 h-36 object-cover rounded-2xl"
+                      />
+                      <div className="flex flex-col justify-between">
+                        <p>{review.feedback.substring(0, 120)}</p>
+                        <div>
+                          <p className="font-semibold">John Doe</p>
+                          <p className="text-gray-300">Manager</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
 
-          <div className="col-span-1 border rounded-md">
-            <div className="bg-white p-2">
-              {!isLoggedIn && (
+            <div className="col-span-1 border rounded-md">
+              <div className="bg-white p-2">
                 <motion.div
-                  className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                 >
+                  <textarea
+                    className="w-full p-2 border rounded mb-4"
+                    placeholder="Leave your feedback here..."
+                    value={feedback}
+                    onChange={(e) => setFeedback(e.target.value)}
+                  />
+                  <div className="flex mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <span
+                        key={star}
+                        className={`cursor-pointer text-2xl ${
+                          rating >= star ? "text-yellow-500" : "text-gray-300"
+                        }`}
+                        onClick={() => handleRating(star)}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
                   <button
-                    className="bg-white text-black px-4 py-2 rounded"
-                    onClick={() => (window.location.href = "/login")}
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    onClick={handleSubmit}
                   >
-                    Login
+                    Submit
                   </button>
                 </motion.div>
-              )}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <textarea
-                  className="w-full p-2 border rounded mb-4"
-                  placeholder="Leave your feedback here..."
-                  value={feedback}
-                  onChange={(e) => setFeedback(e.target.value)}
-                />
-                <div className="flex mb-4">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <span
-                      key={star}
-                      className={`cursor-pointer text-2xl ${
-                        rating >= star ? "text-yellow-500" : "text-gray-300"
-                      }`}
-                      onClick={() => handleRating(star)}
-                    >
-                      ★
-                    </span>
-                  ))}
-                </div>
-                <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded"
-                  onClick={handleSubmit}
-                >
-                  Submit
-                </button>
-              </motion.div>
+              </div>
             </div>
           </div>
-          </div>
-
         </div>
 
         <div className="flex flex-col justify-center">
@@ -165,7 +160,7 @@ const ReviewSection = () => {
             className="mx-auto bg-gray-900 text-white px-4 py-2 rounded w-[300px]"
             onClick={() => (window.location.href = "/reviews")}
           >
-            See All Reviews
+            <Link to={"/reviews"}>See All Reviews</Link>
           </button>
         </div>
       </MaxWidthWrapper>
