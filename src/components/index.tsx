@@ -1,5 +1,5 @@
 import Branding from "./sections/Branding";
-import Featured from "./Featured";
+import Featured from "./sections/Featured";
 import Footer from "./Footer";
 import Review from "./Review";
 
