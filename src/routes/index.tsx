@@ -4,7 +4,7 @@ import { routeGenerator } from "@/utils/routeGenerator";
 import { createBrowserRouter } from "react-router-dom";
 import { adminPaths } from "./admin.routes";
 import { userPaths } from "./user.routes";
-import { Login, NotFound, Signup } from "@/pages";
+import { Login, PageNotFound, Signup } from "@/pages";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { commonPaths } from "./common.routes";
 
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <NotFound />,
+    element: <PageNotFound />,
   },
 ]);
 
