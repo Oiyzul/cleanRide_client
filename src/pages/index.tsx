@@ -5,5 +5,16 @@ import Booking from "./Booking";
 import Signup from "./Signup";
 import Login from "./Login";
 import NotFound from "./NotFound";
-
-export { Home, Services, ServiceDetails, Booking, Signup, Login, NotFound };
+import PaymentSuccessPage from "./PaymentSuccess";
+import PaymentFailPage from "./PaymentFail";
+export {
+  Home,
+  Services,
+  ServiceDetails,
+  Booking,
+  Signup,
+  Login,
+  NotFound,
+  PaymentSuccessPage,
+  PaymentFailPage,
+};

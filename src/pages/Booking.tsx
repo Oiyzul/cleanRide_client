@@ -1,10 +1,13 @@
 import { selectUser } from "@/redux/features/auth/authSlice";
 import { useUpdateSlotMutation } from "@/redux/features/slots/slotApi";
 import { useAppSelector } from "@/redux/hooks";
-import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BookingPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const {
     _id,
     startTime,
@@ -17,11 +20,50 @@ const BookingPage = () => {
 
   const [updateSlot] = useUpdateSlotMutation();
 
+  const paymentFormData = new FormData();
+
   const handlePayment = async () => {
-    const res = await  updateSlot(_id);
-    console.log('res booking', res)
-    // Redirect to AAMARPAY and mark slot as booked
-    // window.location.href = "https://sandbox.aamarpay.com";
+    const paymentData = {
+      store_id: "aamarpaytest",
+      signature_key: "dbb74894e82415a2f7ff0ec3a97e4183",
+      tran_id: Math.random() * 10000,
+      amount: price * 100,
+      currency: "BDT",
+      desc: name + " " + startTime,
+      cus_name: user?.name,
+      cus_email: user?.email,
+      cus_phone: user?.phone,
+      success_url: "http://localhost:5173/payment-succeess",
+      fail_url: "http://localhost:5173/payment-failure",
+      cancel_url: "http://localhost:5173/services",
+      order_description: "Booking Slot",
+      payment_method: "online",
+      type: "json",
+    };
+
+    for (const x in paymentData) {
+      paymentFormData.append(x, paymentData[x]);
+    }
+    // Make a request to Aamarpay API to initiate payment
+    try {
+      const response = await axios.post(
+        "https://sandbox.aamarpay.com",
+        paymentFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const data = await response.data;
+
+      console.log("data from aamarpay", data);
+      await updateSlot(_id);
+
+      navigate("/payment-success");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

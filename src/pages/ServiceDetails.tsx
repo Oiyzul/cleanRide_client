@@ -30,7 +30,7 @@ const ServiceDetails = ({ service }) => {
 
   const handleSlotClick = (slot) => {
     setSelectedSlot(slot);
-    console.log('selected slot', selectedSlot);
+    console.log("selected slot", selectedSlot);
   };
 
   // if (isLoading) return <div>Loading available slots...</div>;
@@ -51,8 +51,6 @@ const ServiceDetails = ({ service }) => {
         <div>No service found.</div>
       ) : isLoading ? (
         <div>Loading available slots...</div>
-      ) : !data?.data?.length ? (
-        <div>No slots available for this date.</div>
       ) : null}
 
       <div className="mb-4">
@@ -64,6 +62,9 @@ const ServiceDetails = ({ service }) => {
           className="p-2 border rounded-md"
         />
       </div>
+      {!data?.data?.length ? (
+        <p className="mb-2 font-semibold">No slots available for this date.</p>
+      ) : null}
 
       <div className="mb-4">
         <label className="block mb-2">Available Time Slots:</label>

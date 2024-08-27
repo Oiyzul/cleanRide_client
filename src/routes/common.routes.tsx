@@ -1,5 +1,5 @@
 import ProtectedRoute from "@/components/layouts/ProtectedRoute";
-import { Booking, Home, ServiceDetails, Services } from "@/pages";
+import { Booking, Home, PaymentFailPage, PaymentSuccessPage, ServiceDetails, Services } from "@/pages";
 
 export const commonPaths = [
   {
@@ -28,6 +28,16 @@ export const commonPaths = [
             <Booking />,
           </ProtectedRoute>
         ),
+      },
+      {
+        name: "Payment Success",
+        path: "/payment-success",
+        element: <PaymentSuccessPage />,
+      },
+      {
+        name: "Payment Failure",
+        path: "/payment-failure",
+        element: <PaymentFailPage />,
       },
     ],
   },
