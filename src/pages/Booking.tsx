@@ -1,22 +1,27 @@
-import { useState } from "react";
+import { selectUser } from "@/redux/features/auth/authSlice";
+import { useUpdateSlotMutation } from "@/redux/features/slots/slotApi";
+import { useAppSelector } from "@/redux/hooks";
 import { useLocation } from "react-router-dom";
 
 const BookingPage = () => {
   const location = useLocation();
   const {
+    _id,
     startTime,
     endTime,
     date,
     service: { name, description, price, duration },
   } = location.state || {};
-  console.log("data router");
 
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
+  const user = useAppSelector(selectUser);
 
-  const handlePayment = () => {
+  const [updateSlot] = useUpdateSlotMutation();
+
+  const handlePayment = async () => {
+    const res = await  updateSlot(_id);
+    console.log('res booking', res)
     // Redirect to AAMARPAY and mark slot as booked
-    window.location.href = "https://sandbox.aamarpay.com";
+    // window.location.href = "https://sandbox.aamarpay.com";
   };
 
   return (
@@ -53,8 +58,7 @@ const BookingPage = () => {
                 <label className="block text-gray-700">User Name</label>
                 <input
                   type="text"
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
+                  value={user?.name}
                   className="w-full px-3 py-2 border rounded-lg"
                 />
               </div>
@@ -62,8 +66,7 @@ const BookingPage = () => {
                 <label className="block text-gray-700">Email</label>
                 <input
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={user?.email}
                   className="w-full px-3 py-2 border rounded-lg"
                 />
               </div>

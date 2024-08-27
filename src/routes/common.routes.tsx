@@ -1,3 +1,4 @@
+import ProtectedRoute from "@/components/layouts/ProtectedRoute";
 import { Booking, Home, ServiceDetails, Services } from "@/pages";
 
 export const commonPaths = [
@@ -22,7 +23,11 @@ export const commonPaths = [
       {
         name: "Bookings",
         path: "/bookings",
-        element: <Booking />,
+        element: (
+          <ProtectedRoute role='user'>
+            <Booking />,
+          </ProtectedRoute>
+        ),
       },
     ],
   },
