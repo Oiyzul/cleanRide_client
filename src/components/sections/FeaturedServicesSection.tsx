@@ -1,4 +1,4 @@
-import { useGetServicesQuery } from "@/redux/api/serviceApi";
+import { useGetServicesQuery } from "@/redux/features/services/serviceApi";
 import MaxWidthWrapper from "../MaxWidthWrapper";
 import ServiceCard from "../ServiceCard";
 

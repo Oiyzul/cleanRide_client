@@ -1,6 +1,7 @@
 import { Service } from "@/components";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { useGetServicesQuery } from "@/redux/api/serviceApi";
+import { useGetServicesQuery } from "@/redux/features/services/serviceApi";
+
 import { useState } from "react";
 
 // const servicesData = [
@@ -15,7 +16,7 @@ const ServicesPage = () => {
   const [sortType, setSortType] = useState("name");
   const [filterPrice, setFilterPrice] = useState("");
 
-  const { data, isLoading } = useGetServicesQuery({});
+  const { data=[], isLoading } = useGetServicesQuery({});
   console.log("servicesData", data);
   console.log("isLoading", isLoading);
   const handleSearch = (event) => {
@@ -30,7 +31,7 @@ const ServicesPage = () => {
     setFilterPrice(event.target.value);
   };
 
-  const filteredServices = data.data.length
+  const filteredServices = data?.data?.length
     ? data.data
         .filter((service) =>
           service.name.toLowerCase().includes(searchTerm.toLowerCase())
