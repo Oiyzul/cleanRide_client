@@ -58,7 +58,10 @@ const BookingPage = () => {
       const data = await response.data;
 
       console.log("data from aamarpay", data);
-      await updateSlot(_id);
+      const slotData = {
+        isBooked: 'booked'
+      }
+      await updateSlot(_id, slotData);
 
       navigate("/payment-success");
     } catch (err) {

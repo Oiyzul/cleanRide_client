@@ -1,5 +1,11 @@
+import SlotDataTable from "@/components/tables/SlotDataTable";
+
 const SlotList = () => {
-  return <div>Slots</div>;
+  return (
+    <div>
+      <SlotDataTable />
+    </div>
+  );
 };
 
 export default SlotList;

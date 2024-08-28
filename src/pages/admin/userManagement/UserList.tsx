@@ -1,5 +1,9 @@
+import UsersDataTable from "@/components/tables/UsersDataTable";
+
 const UserList = () => {
-  return <div>UserList</div>;
+  return <div>
+    <UsersDataTable />
+  </div>;
 };
 
 export default UserList;

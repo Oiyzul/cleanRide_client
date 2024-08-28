@@ -6,7 +6,7 @@ const slotApi = baseApi.injectEndpoints({
       query: (args) => {
         const params = new URLSearchParams();
 
-        if (args) {
+        if (args.length > 0) {
           args.forEach((query) => {
             console.log('query', query.key, query.value)
             params.append(query.key, query.value);
@@ -22,10 +22,13 @@ const slotApi = baseApi.injectEndpoints({
       providesTags: ["slots"],
     }),
     updateSlot: builder.mutation ({
-      query : (id:string) => ({
+      query : ({id, data}) => {
+        console.log('api2',  data)
+        return{
         url: `/slots/update-slot/${id}`,
-        method: 'PATCH',
-      }),
+        method: 'PUT',
+        body: data,
+      }},
       invalidatesTags: ["slots"],
     }),
   }),
