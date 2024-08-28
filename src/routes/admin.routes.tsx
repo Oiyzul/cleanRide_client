@@ -1,4 +1,5 @@
 import {
+  AddService,
   AdminDashboard,
   CreateSlot,
   ServiceList,
@@ -14,7 +15,7 @@ export const adminPaths = [
     element: <AdminDashboard />,
   },
   {
-    name: "Service Management",
+    title: "Service Management",
     children: [
       {
         name: "Service List",
@@ -24,12 +25,12 @@ export const adminPaths = [
       {
         name: "Add Service",
         path: "create-service",
-        element: <ServiceList />,
+        element: <AddService />,
       },
     ],
   },
   {
-    name: "Slot Management",
+    title: "Slot Management",
     children: [
       {
         name: "Slot List",
@@ -44,7 +45,7 @@ export const adminPaths = [
     ],
   },
   {
-    name: "User Management",
+    title: "User Management",
     children: [
       {
         name: "User List",
