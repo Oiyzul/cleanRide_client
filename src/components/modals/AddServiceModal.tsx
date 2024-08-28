@@ -21,15 +21,21 @@ const AddServiceModal = ({ setOpen }) => {
   });
 
   async function onSubmit(data) {
-    console.log(data);
-    setOpen(false);
-
     // Add service to the database here
-    const res = await addService(data)
-    if(res.data.success) {
-      //toast message
-      console.log("Service added successfully");
-      console.log(res)
+    try {
+      const res = await addService(data);
+      if (res.data.success) {
+        //toast message
+        console.log("Service added successfully");
+        console.log(res);
+      }
+
+      // Close modal after adding service
+      setOpen(false);
+      // Reset form fields
+      form.reset();
+    } catch (err) {
+      console.log(err);
     }
   }
 

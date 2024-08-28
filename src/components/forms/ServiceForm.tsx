@@ -91,11 +91,11 @@ const ServiceForm = ({ form, onSubmit }) => {
         <FormField
           control={form.control}
           name="imgUrl"
-          render={({ field }) => (
+          render={({ field: {value,onChange, ...fieldProps} }) => (
             <FormItem>
               <FormLabel>Upload Image</FormLabel>
               <FormControl>
-                <Input type="file" accept="image/*" {...field} />
+                <Input type="file" accept="image/*" {...fieldProps} placeholder="Image" onChange={onChange} />
               </FormControl>
               <FormDescription>Choose an image file to upload.</FormDescription>
               <FormMessage />
