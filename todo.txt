@@ -1,0 +1,4 @@
+// add aamarpay
+// book a service using booking route
+// display users booking in admin users management
+// display individual user booking past and upcoming with countdown timer

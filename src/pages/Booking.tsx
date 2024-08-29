@@ -1,78 +1,65 @@
+import BookingForm from "@/components/forms/BookingForm";
+import { createBookingValidationSchema } from "@/components/modals/schemas";
 import { selectUser } from "@/redux/features/auth/authSlice";
-import { useUpdateSlotMutation } from "@/redux/features/slots/slotApi";
+import { useCreateBookingMutation } from "@/redux/features/bookings/bookingApi";
 import { useAppSelector } from "@/redux/hooks";
+import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
+import { z } from "zod";
 
 const BookingPage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  const user = useAppSelector(selectUser);
+  const [createBooking] = useCreateBookingMutation();
+  const [error, setError] = useState("");
 
   const {
-    _id,
+    _id: slotId,
     startTime,
     endTime,
     date,
-    service: { name, description, price, duration },
+    service: { _id: serviceId, name, description, price, duration },
   } = location.state || {};
 
-  const user = useAppSelector(selectUser);
-
-  const [updateSlot] = useUpdateSlotMutation();
-
-  const paymentFormData = new FormData();
-
-  const handlePayment = async () => {
-    const paymentData = {
-      store_id: "aamarpaytest",
-      signature_key: "dbb74894e82415a2f7ff0ec3a97e4183",
-      tran_id: Math.random() * 10000,
-      amount: price * 100,
-      currency: "BDT",
-      desc: name + " " + startTime,
-      cus_name: user?.name,
-      cus_email: user?.email,
-      cus_phone: user?.phone,
-      success_url: "http://localhost:5173/payment-succeess",
-      fail_url: "http://localhost:5173/payment-failure",
-      cancel_url: "http://localhost:5173/services",
-      order_description: "Booking Slot",
-      payment_method: "online",
-      type: "json",
-    };
-
-    for (const x in paymentData) {
-      paymentFormData.append(x, paymentData[x]);
-    }
-    // Make a request to Aamarpay API to initiate payment
+  const form = useForm<z.infer<typeof createBookingValidationSchema>>({
+    resolver: zodResolver(createBookingValidationSchema),
+    defaultValues: {
+      customerName: user?.name || "",
+      email: user?.email || "",
+      serviceId: serviceId || "",
+      slotId: slotId || "",
+      vehicleType: "car",
+      vehicleBrand: "",
+      vehicleModel: "",
+      manufacturingYear: 0,
+      registrationPlate: "",
+    },
+  });
+  const onSubmit = async (data: any) => {
     try {
-      const response = await axios.post(
-        "https://sandbox.aamarpay.com",
-        paymentFormData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      const data = await response.data;
+      const res = await createBooking(data).unwrap();
+      console.log("res", res);
+      if (res.success) {
+        console.log("res", res, "Booking created successfully.");
 
-      console.log("data from aamarpay", data);
-      const slotData = {
-        isBooked: 'booked'
+        window.location.href = res.data.payment_url;
+      } else if (!res.success) {
+        console.log("Failed to create booking.");
+        setError(res?.message);
       }
-      await updateSlot(_id, slotData);
-
-      navigate("/payment-success");
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      setError(err?.message);
     }
   };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
-        <div className="flex">
+        <div className="flex flex-col md:flex-row gap-5">
           {/* Left Side */}
           <div className="w-1/2 p-4">
             <h2 className="text-2xl font-bold mb-4">Selected Service</h2>
@@ -92,46 +79,16 @@ const BookingPage = () => {
               <strong>Duration:</strong> {duration} minutes
             </p>
             <p className="mb-2">
-              <strong>Price:</strong> ${price}
+              <strong>Price:</strong> {price} BDT
             </p>
           </div>
           {/* Right Side */}
           <div className="w-1/2 p-4">
-            <h2 className="text-2xl font-bold mb-4">User Information</h2>
-            <form>
-              <div className="mb-4">
-                <label className="block text-gray-700">User Name</label>
-                <input
-                  type="text"
-                  value={user?.name}
-                  className="w-full px-3 py-2 border rounded-lg"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Email</label>
-                <input
-                  type="email"
-                  value={user?.email}
-                  className="w-full px-3 py-2 border rounded-lg"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Selected Time</label>
-                <input
-                  type="text"
-                  value={startTime}
-                  readOnly
-                  className="w-full px-3 py-2 border rounded-lg bg-gray-100"
-                />
-              </div>
-              <button
-                type="button"
-                onClick={handlePayment}
-                className="w-full bg-blue-500 text-white py-2 rounded-lg"
-              >
-                Pay Now
-              </button>
-            </form>
+            <h2 className="text-2xl font-bold mb-4">Booking Information</h2>
+            <BookingForm form={form} onSubmit={onSubmit} />
+            {error ? (
+              <p className="text-red-500 font-semibold mt-5">{error}</p>
+            ) : null}
           </div>
         </div>
       </div>

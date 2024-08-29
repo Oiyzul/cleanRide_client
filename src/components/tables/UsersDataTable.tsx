@@ -112,7 +112,9 @@ const UsersDataTable = () => {
                                 )
                               }
                             >
-                             {`Update to ${role === "user" ? "admin" : "user"}`}
+                              {`Update to ${
+                                role === "user" ? "admin" : "user"
+                              }`}
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
