@@ -158,7 +158,9 @@ const ServiceDataTable = () => {
       </CardContent>
       <CardFooter>
         <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of{" "}
+          Showing <strong>{`1-${
+            serviceData?.data?.length <= 10 ? serviceData?.data?.length : 10
+          }`}</strong> of{" "}
           <strong>{serviceData?.data?.length}</strong> services
         </div>
       </CardFooter>

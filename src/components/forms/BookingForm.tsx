@@ -140,7 +140,7 @@ const BookingForm = ({ form, onSubmit }) => {
           )}
         />
         <div className="mt-8">
-          <Button type="submit" className="w-full">Proced to payment</Button>
+          <Button type="submit" className="w-full">Pay Now</Button>
         </div>
       </form>
     </Form>

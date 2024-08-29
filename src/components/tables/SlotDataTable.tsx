@@ -189,8 +189,11 @@ const SlotDataTable = () => {
       </CardContent>
       <CardFooter>
         <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of{" "}
-          <strong>{slotData?.data?.length}</strong> slots
+          Showing{" "}
+          <strong>{`1-${
+            slotData?.data?.length <= 10 ? slotData?.data?.length : 10
+          }`}</strong>{" "}
+          of <strong>{slotData?.data?.length}</strong> slots
         </div>
       </CardFooter>
     </Card>

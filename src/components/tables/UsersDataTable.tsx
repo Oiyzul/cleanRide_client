@@ -129,7 +129,9 @@ const UsersDataTable = () => {
       </CardContent>
       <CardFooter>
         <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of{" "}
+          Showing <strong>{`1-${
+            usersData?.data?.length <= 10 ? usersData?.data?.length : 10
+          }`}</strong> of{" "}
           <strong>{usersData?.data?.length}</strong> slots
         </div>
       </CardFooter>
