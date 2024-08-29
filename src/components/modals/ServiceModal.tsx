@@ -2,7 +2,7 @@ import ServiceForm from "../forms/ServiceForm";
 import { DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
 const ServiceModal = ({ form, title, onSubmit }) => {
-//  console.log('formm, onSubmitm', form, onSubmit)
+  //  console.log('formm, onSubmitm', form, onSubmit)
   return (
     <DialogContent className="sm:max-w-[525px] max-h-screen overflow-y-scroll">
       <DialogHeader>
