@@ -1,8 +1,8 @@
 // ServiceDetails.js
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import { MaxWidthWrapper } from "@/components";
 import { useGetSingleServiceQuery } from "@/redux/features/services/serviceApi";
 import { useGetSlotsQuery } from "@/redux/features/slots/slotApi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const ServiceDetails = ({ service }) => {

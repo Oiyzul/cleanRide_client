@@ -1,11 +1,9 @@
-"use client";
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import MaxWidthWrapper from "./MaxWidthWrapper";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout, selectUser } from "@/redux/features/auth/authSlice";
+import { MaxWidthWrapper } from "@/components";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);

@@ -2,6 +2,46 @@ import BrandingSection from "./sections/BrandingSection";
 import FeaturedServicesSection from "./sections/FeaturedServicesSection";
 import FooterSection from "./sections/FooterSection";
 import ReviewSection from "./sections/ReviewSection";
-import Service from "./Service";
+import Navbar from "./navbars/Navbar";
+import DashboardNavbar from "./navbars/DashboardNavbar";
+import DashboardSidebar from "./navbars/DashboardSidebar";
+import BookingForm from "./forms/BookingForm";
+import ReviewForm from "./forms/ReviewForm";
+import ServiceForm from "./forms/ServiceForm";
+import UserForm from "./forms/UserForm";
+import AddServiceModal from "./modals/AddServiceModal";
+import EditServiceModal from "./modals/EditServiceModal";
+import UpdateUserInfo from "./modals/UpdateUserInfo";
+import BookingInfo from "./others/BookingInfo";
+import ImageSlider from "./others/ImageSlider";
+import MaxWidthWrapper from "./others/MaxWidthWrapper";
+import ScrollToTop from "./others/ScrollToTop";
+import ServiceCard from "./others/ServiceCard";
+import ServiceItem from "./others/ServiceIItem";
+import UpcomingBookings from "./others/UpcomingBookings";
+import UserInfo from "./others/UserInfo";
 
-export { BrandingSection, FeaturedServicesSection, FooterSection, ReviewSection, Service };
+export {
+  BrandingSection,
+  FeaturedServicesSection,
+  FooterSection,
+  ReviewSection,
+  Navbar,
+  DashboardNavbar,
+  DashboardSidebar,
+  BookingForm,
+  ReviewForm,
+  ServiceForm,
+  UserForm,
+  AddServiceModal,
+  EditServiceModal,
+  UpdateUserInfo,
+  BookingInfo,
+  ImageSlider,
+  MaxWidthWrapper,
+  ScrollToTop,
+  ServiceCard,
+  ServiceItem,
+  UpcomingBookings,
+  UserInfo,
+};

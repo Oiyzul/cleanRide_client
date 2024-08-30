@@ -1,4 +1,4 @@
-import { AlignVerticalSpaceAround, ArrowUp, ArrowUp01, Scroll } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const ScrollToTop = () => {

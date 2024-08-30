@@ -1,6 +1,5 @@
 import { useGetServicesQuery } from "@/redux/features/services/serviceApi";
-import MaxWidthWrapper from "../MaxWidthWrapper";
-import ServiceCard from "../ServiceCard";
+import { MaxWidthWrapper, ServiceCard } from "@/components";
 
 const FeaturedServicesSection = () => {
   const { data, isLoading, error } = useGetServicesQuery({});

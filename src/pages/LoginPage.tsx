@@ -5,7 +5,7 @@ import { tokenDecode } from "@/utils/tokenDecode";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -15,13 +15,12 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     console.log(formData);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
       const res = await login(formData).unwrap();
       console.log("res", res);
@@ -88,4 +87,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

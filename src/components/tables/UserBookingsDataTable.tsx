@@ -15,14 +15,7 @@ import {
   TableRow,
 } from "../ui/table";
 
-import { useGetSingleUserBookingsQuery } from "@/redux/features/bookings/bookingApi";
-
-const UserBookingsDataTable = ({ userId }) => {
-  const { data: bookingsData = [], isLoading } =
-    useGetSingleUserBookingsQuery(userId);
-
-  if (isLoading) return <div>Loading...</div>;
-
+const UserBookingsDataTable = ({ bookingsData }) => {
   return (
     <Card x-chunk="dashboard-06-chunk-0">
       <CardHeader>
@@ -48,7 +41,7 @@ const UserBookingsDataTable = ({ userId }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {bookingsData?.data?.map((booking) => {
+            {bookingsData?.map((booking) => {
               const {
                 customer: { name: customerName },
                 service: { name: serviceName },
@@ -87,9 +80,9 @@ const UserBookingsDataTable = ({ userId }) => {
         <div className="text-xs text-muted-foreground">
           Showing{" "}
           <strong>{`1-${
-            bookingsData?.data?.length <= 10 ? bookingsData?.data?.length : 10
+            bookingsData?.length <= 10 ? bookingsData?.length : 10
           }`}</strong>{" "}
-          of <strong>{bookingsData?.data?.length}</strong> bookings
+          of <strong>{bookingsData?.length}</strong> bookings
         </div>
       </CardFooter>
     </Card>

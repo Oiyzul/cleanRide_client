@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import MaxWidthWrapper from "../MaxWidthWrapper";
+import { MaxWidthWrapper } from "@/components";
 import { Button } from "../ui/button";
 import { useAppSelector } from "@/redux/hooks";
 import { selectToken } from "@/redux/features/auth/authSlice";
@@ -26,8 +26,8 @@ const ReviewSection = () => {
         "Service was average, but the atmosphere was good. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione ipsa quo itaque. Eos necessitatibus dolorem, aliquid ullam nam excepturi? Reiciendis?",
     },
   ]);
-  
-  const token = useAppSelector(selectToken)
+
+  const token = useAppSelector(selectToken);
 
   const handleRating = (value) => {
     setRating(value);

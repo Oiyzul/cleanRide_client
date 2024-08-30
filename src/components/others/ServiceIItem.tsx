@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Service = ({ service }) => {
+const ServiceItem = ({ service }) => {
   return (
     <div className="border p-4 rounded-lg shadow-md mb-4">
       <Link to={`/services/${service._id}`}>
@@ -13,4 +13,4 @@ const Service = ({ service }) => {
   );
 };
 
-export default Service;
+export default ServiceItem;

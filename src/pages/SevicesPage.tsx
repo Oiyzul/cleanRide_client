@@ -1,5 +1,4 @@
-import { Service } from "@/components";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import { MaxWidthWrapper, ServiceItem } from "@/components";
 import { useGetServicesQuery } from "@/redux/features/services/serviceApi";
 
 import { useState } from "react";
@@ -16,7 +15,7 @@ const ServicesPage = () => {
   const [sortType, setSortType] = useState("name");
   const [filterPrice, setFilterPrice] = useState("");
 
-  const { data=[], isLoading } = useGetServicesQuery({});
+  const { data = [], isLoading } = useGetServicesQuery({});
   console.log("servicesData", data);
   console.log("isLoading", isLoading);
   const handleSearch = (event) => {
@@ -82,7 +81,7 @@ const ServicesPage = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredServices?.map((service) => (
-          <Service key={service.name} service={service} />
+          <ServiceItem key={service.name} service={service} />
         ))}
       </div>
     </MaxWidthWrapper>

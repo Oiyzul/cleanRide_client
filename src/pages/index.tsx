@@ -1,20 +1,17 @@
-import Home from "./Home";
-import Services from "./Sevices";
-import ServiceDetails from "./ServiceDetails";
-import Booking from "./Booking";
-import Signup from "./Signup";
-import Login from "./Login";
-import PageNotFound from "./PageNotFound";
-import PaymentSuccessPage from "./PaymentSuccess";
-import PaymentFailPage from "./PaymentFail";
+import HomePage from "./HomePage";
+import ServicesPage from "./SevicesPage";
+import ServiceDetailsPage from "./ServiceDetailsPage";
+import BookingPage from "./BookingPage";
+import RegisterPage from "./RegisterPage";
+import LoginPage from "./LoginPage";
+import NotFoundPage from "./NotFoundPage";
+
 export {
-  Home,
-  Services,
-  ServiceDetails,
-  Booking,
-  Signup,
-  Login,
-  PageNotFound,
-  PaymentSuccessPage,
-  PaymentFailPage,
+  HomePage,
+  ServicesPage,
+  ServiceDetailsPage,
+  BookingPage,
+  RegisterPage,
+  LoginPage,
+  NotFoundPage,
 };

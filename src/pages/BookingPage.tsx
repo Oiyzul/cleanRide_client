@@ -4,10 +4,9 @@ import { selectUser } from "@/redux/features/auth/authSlice";
 import { useCreateBookingMutation } from "@/redux/features/bookings/bookingApi";
 import { useAppSelector } from "@/redux/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { z } from "zod";
 
 const BookingPage = () => {

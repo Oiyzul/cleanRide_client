@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
-import { Dialog, DialogTrigger } from "./ui/dialog";
+import { Button } from "./../ui/button";
+import { Card, CardContent, CardFooter, CardHeader } from "./../ui/card";
+import { Dialog, DialogTrigger } from "./../ui/dialog";
 import { PlusCircle } from "lucide-react";
-import UpdateUserInfo from "./modals/UpdateUserInfo";
+import UpdateUserInfo from "./../modals/UpdateUserInfo";
 
 const UserInfo = ({ userData }) => {
   const [open, setOpen] = useState(false);

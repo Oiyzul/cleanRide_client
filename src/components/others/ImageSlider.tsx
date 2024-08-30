@@ -8,10 +8,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "./ui/card";
+import { Card, CardContent } from "./../ui/card";
 
 const images = ["/carwash.jpg", "/carwash2.jpg", "/carwash3.jpg"];
-export function CarouselPlugin() {
+function ImageSlieder() {
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: false })
   );
@@ -47,3 +47,4 @@ export function CarouselPlugin() {
     </Carousel>
   );
 }
+ export default ImageSlieder;

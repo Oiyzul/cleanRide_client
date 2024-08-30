@@ -2,7 +2,7 @@ import { useSignupMutation } from "@/redux/features/auth/authApi";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const SignUp = () => {
+const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,13 +27,12 @@ const SignUp = () => {
     setMessage("");
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     console.log(formData);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //toast message
     try {
       if (formData.email && formData.password) {
@@ -45,7 +44,7 @@ const SignUp = () => {
       } else {
         // toast message fill up email and password
       }
-    } catch (error) {
+    } catch (error: any) {
       setMessage(error.response.data.message);
     }
   };
@@ -132,4 +131,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default RegisterPage;

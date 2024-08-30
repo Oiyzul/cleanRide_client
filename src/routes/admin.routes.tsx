@@ -6,7 +6,7 @@ import {
   SlotList,
   UserBookings,
   UserList,
-} from "@/pages/admin";
+} from "@/pages/admin-dashboard";
 
 export const adminPaths = [
   {
@@ -15,7 +15,7 @@ export const adminPaths = [
     element: <AdminDashboard />,
   },
   {
-    title: "Service Management",
+    name: "Service Management",
     children: [
       {
         name: "Service List",
@@ -30,7 +30,7 @@ export const adminPaths = [
     ],
   },
   {
-    title: "Slot Management",
+    name: "Slot Management",
     children: [
       {
         name: "Slot List",
@@ -45,7 +45,7 @@ export const adminPaths = [
     ],
   },
   {
-    title: "User Management",
+    name: "User Management",
     children: [
       {
         name: "User List",

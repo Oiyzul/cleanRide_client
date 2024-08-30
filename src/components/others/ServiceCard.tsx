@@ -1,6 +1,6 @@
 import { ArrowBigRightDash } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "./ui/button";
+import { Button } from "./../ui/button";
 import {
     Card,
     CardContent,
@@ -8,7 +8,7 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "./ui/card";
+} from "./../ui/card";
 
 const ServiceCard = ({ _id, name, description, imgUrl }) => {
   return (
