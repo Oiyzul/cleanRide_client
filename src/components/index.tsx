@@ -21,6 +21,7 @@ import UpcomingBookingItem from "./others/UpcomingBookingItem";
 import UserInfo from "./others/UserInfo";
 import UpdateUserInfo from "./others/UpdateUserInfo";
 import Logo from "./others/Logo";
+import ComparisonTable from "./others/ComparisonTable";
 
 export {
   BrandingSection,
@@ -45,5 +46,6 @@ export {
   UpcomingBookingItem as UpcomingBookings,
   UserInfo,
   UpdateUserInfo,
-  Logo
+  Logo,
+  ComparisonTable
 };

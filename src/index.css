@@ -87,3 +87,7 @@
 .custom-clip {
   clip-path: polygon(8% 57%, 100% 57%, 100% 100%, 0% 100%);
 }
+
+.logo-clip {
+  clip-path: polygon(10% 0%, 80% 0, 100% 50%, 100% 100%, 5% 100%, 0 90%, 0 9%);
+}

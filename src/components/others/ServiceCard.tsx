@@ -1,33 +1,37 @@
-import { ArrowBigRightDash } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import { Button } from "./../ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./../ui/card";
 
-const ServiceCard = ({ _id, name, description, imgUrl }: TService) => {
+type TProps = {
+  service: TService;
+  onSelect: (service: TService) => void;
+  selected: boolean;
+};
+const ServiceCard = ({ service, onSelect, selected }: TProps) => {
+  console.log("selected", selected);
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{name}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-      <CardContent className="">
-        <img src={imgUrl} alt="" />
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full" asChild>
-          <Link to={`/services/${_id}`}>
-            <ArrowBigRightDash className="mr-2 h-4 w-4" /> View Details
-          </Link>
-        </Button>
-      </CardFooter>
-    </Card>
+    <div className="border p-4 rounded-lg shadow-md">
+      <h2 className="text-xl font-bold">{service.name}</h2>
+      <p>Price: ${service.price}</p>
+      <p>Duration: {service.duration} mins</p>
+      {/* <p>Features: {service?.features?.join(", ")}</p> */}
+      <div className="flex justify-between">
+        <button
+          className="mt-2 bg-blue-500 text-white py-1 px-4 rounded"
+          onClick={() => onSelect(service)}
+        >
+          <Link to={`/services/${service._id}`}>View Details</Link>
+        </button>
+        <button
+          className={cn(
+            selected ? "bg-gray-900" : "bg-gray-500",
+            "mt-2 text-white py-1 px-4 rounded"
+          )}
+          onClick={() => onSelect(service)}
+        >
+          Compare
+        </button>
+      </div>
+    </div>
   );
 };
 

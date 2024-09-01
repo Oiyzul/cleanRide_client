@@ -1,23 +1,20 @@
-import { MaxWidthWrapper, ServiceItem } from "@/components";
+import {
+  ComparisonTable,
+  MaxWidthWrapper,
+  ServiceCard
+} from "@/components";
 import { useGetServicesQuery } from "@/redux/features/services/serviceApi";
-
 import { useState } from "react";
-
-// const servicesData = [
-//   { name: 'Basic Wash', description: 'Exterior wash and dry', price: 10, duration: 15 },
-//   { name: 'Deluxe Wash', description: 'Exterior wash, dry, and wax', price: 20, duration: 30 },
-//   { name: 'Premium Wash', description: 'Full exterior and interior cleaning', price: 30, duration: 45 },
-//   // Add more services as needed
-// ];
 
 const ServicesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortType, setSortType] = useState("name");
   const [filterPrice, setFilterPrice] = useState("");
+  const [selectedServices, setSelectedServices] = useState<TService[]>([]);
+  const [selected, setSelected] = useState<TService[]>([]);
 
   const { data = [], isLoading } = useGetServicesQuery({});
   console.log("servicesData", data);
-  console.log("isLoading", isLoading);
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
@@ -49,6 +46,16 @@ const ServicesPage = () => {
         })
     : null;
 
+  const handleServiceCompare = (service: TService) => {
+    setSelectedServices((prevServices) => {
+      if (prevServices.includes(service)) {
+        return prevServices.filter((s) => s._id !== service._id);
+      } else {
+        return [...prevServices, service];
+      }
+    });
+  };
+
   if (isLoading) return <div>Loading...</div>;
 
   return (
@@ -79,9 +86,18 @@ const ServicesPage = () => {
           className="p-2 border rounded-md"
         />
       </div>
+      <div className="container mx-auto p-4">
+        <h1 className="text-xl font-bold mb-1">Compare Car Wash Services</h1>
+        <ComparisonTable selectedServices={selectedServices} />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredServices?.map((service: TService) => (
-          <ServiceItem key={service.name} service={service} />
+          <ServiceCard
+            key={service._id}
+            service={service}
+            onSelect={handleServiceCompare}
+            selected={selectedServices.includes(service)}
+          />
         ))}
       </div>
     </MaxWidthWrapper>
