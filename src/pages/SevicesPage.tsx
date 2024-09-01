@@ -18,27 +18,27 @@ const ServicesPage = () => {
   const { data = [], isLoading } = useGetServicesQuery({});
   console.log("servicesData", data);
   console.log("isLoading", isLoading);
-  const handleSearch = (event) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSort = (event) => {
+  const handleSort = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortType(event.target.value);
   };
 
-  const handleFilterPrice = (event) => {
+  const handleFilterPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilterPrice(event.target.value);
   };
 
   const filteredServices = data?.data?.length
     ? data.data
-        .filter((service) =>
+        .filter((service: TService) =>
           service.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
-        .filter((service) =>
+        .filter((service: any) =>
           filterPrice ? service.price <= filterPrice : true
         )
-        .sort((a, b) => {
+        .sort((a: any, b: any) => {
           if (sortType === "price") {
             return a.price - b.price;
           } else if (sortType === "duration") {
@@ -80,7 +80,7 @@ const ServicesPage = () => {
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredServices?.map((service) => (
+        {filteredServices?.map((service: TService) => (
           <ServiceItem key={service.name} service={service} />
         ))}
       </div>

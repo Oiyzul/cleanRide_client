@@ -1,9 +1,5 @@
-import {
-  useDeleteServiceMutation,
-  useGetServicesQuery,
-} from "@/redux/features/services/serviceApi";
-import { Plus, Trash } from "lucide-react";
-import EditServiceModal from "../modals/EditServiceModal";
+import { ArrowBigLeft } from "lucide-react";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Dialog, DialogTrigger } from "../ui/dialog";
 import {
   Table,
   TableBody,
@@ -21,72 +16,83 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../ui/alert-dialog";
-import * as React from "react";
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
+import { cn } from "@/lib/utils";
 import {
   useGetSlotsQuery,
   useUpdateSlotMutation,
 } from "@/redux/features/slots/slotApi";
-import { cn } from "@/lib/utils";
 
-const SlotDataTable = () => {
-  const [status, setStatus] = useState("");
+const StatusToggle = ({
+  isBooked,
+  slotId,
+}: {
+  isBooked: string;
+  slotId: string;
+}) => {
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const [updateSlot] = useUpdateSlotMutation({});
 
-  const { data: slotData = [], isLoading } = useGetSlotsQuery({});
+  const handleUpdateStatus = async (slotId: string, status: string) => {
+    setIsUpdating(true);
 
-  const handleUpdateSlotStatus = async (id: string) => {
-    if (status && id) {
-      const slotUpdatedData = {
-        id: id,
-        data: { isBooked: status },
-      };
-      const res = await updateSlot(slotUpdatedData);
-      console.log("res", res);
-      if (res?.data?.success) {
-        //toast  "Service status updated successfully"
-        console.log("Slot status updated successfully");
-      }
+    const slotUpdatedData = {
+      id: slotId,
+      data: { isBooked: status },
+    };
+
+    const res = await updateSlot(slotUpdatedData);
+
+    setIsUpdating(false);
+    if (res?.data?.success) {
+      //toast  "Service status updated successfully"
+      console.log("Slot status updated successfully");
     }
   };
-  const handleDelete = async (id: string) => {
-    // const res = await deleteService(id);
-    // if (res.data.success) {
-    //   //toast  "Service deleted successfully"
-    //   console.log("Service deleted successfully");
-    // }
-  };
+  return (
+    <div className="flex gap-2">
+      <button
+        className={cn(
+          "cursor-not-allowed px-4 py-1 border rounded",
+          isBooked === "available"
+            ? "text-blue-500 border-blue-500"
+            : "text-red-500 border-red-500"
+        )}
+      >
+        {isBooked}
+      </button>
+      <button
+        className={cn("px-4 p-1 border rounded")}
+        onClick={() =>
+          handleUpdateStatus(
+            slotId,
+            isBooked === "available" ? "cancelled" : "available"
+          )
+        }
+      >
+        {isUpdating ? (
+          "Updating..."
+        ) : (
+          <>
+            <ArrowBigLeft className="inline" />
+            {isBooked === "available" ? "cancel" : "available"}
+          </>
+        )}
+      </button>
+    </div>
+  );
+};
+
+const SlotDataTable = () => {
+  const { data: slotData = [], isLoading } = useGetSlotsQuery({});
 
   if (isLoading) return <div>Loading...</div>;
   return (
     <Card x-chunk="dashboard-06-chunk-0">
       <CardHeader>
-        <CardTitle>Services</CardTitle>
-        <CardDescription>
-          Manage your services and view their sales performance.
-        </CardDescription>
+        <CardTitle>Slots</CardTitle>
+        <CardDescription>Manage services slots.</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
@@ -101,14 +107,14 @@ const SlotDataTable = () => {
               <TableHead className="">End Time</TableHead>
               <TableHead className="">Created at</TableHead>
               <TableHead className="">Status</TableHead>
-              <TableHead>
-                {/* <span className="sr-only">Actions</span> */}
+              {/* <TableHead>
+                <span className="sr-only">Actions</span>
                 Actions
-              </TableHead>
+              </TableHead> */}
             </TableRow>
           </TableHeader>
           <TableBody>
-            {slotData?.data?.map((slot) => {
+            {slotData?.data?.map((slot: TSlot) => {
               const {
                 _id: slotId,
                 service: { _id: serviceId },
@@ -119,7 +125,7 @@ const SlotDataTable = () => {
                 createdAt,
               } = slot;
               return (
-                <TableRow>
+                <TableRow key={slotId}>
                   <TableCell className="sm:table-cell">{serviceId}</TableCell>
                   <TableCell className="font-medium">{slotId}</TableCell>
                   <TableCell>{date}</TableCell>
@@ -128,30 +134,27 @@ const SlotDataTable = () => {
                   <TableCell>
                     {new Date(createdAt).toLocaleDateString()}
                   </TableCell>
-                  <TableCell
+                  <TableCell>
+                    {isBooked === "booked" ? (
+                      <button className="text-green-500 cursor-not-allowed px-4 p-1 border border-green-500 rounded">
+                        {isBooked}
+                      </button>
+                    ) : (
+                      <StatusToggle isBooked={isBooked} slotId={slotId} />
+                    )}
+                  </TableCell>
+                  {/* <TableCell
                     className={cn(
                       isBooked === "booked" ? "text-green-500" : ""
                     )}
                   >
-                    {isBooked} <br />
-                    {!(isBooked === "booked") && (
-                      <>
-                        <label htmlFor="isBooked">Change status:</label>
-                        <select
-                          name="isBooked"
-                          id="isBooked"
-                          onChange={(e) => {
-                            setStatus(e.target.value);
-                            handleUpdateSlotStatus(slotId);
-                          }}
-                        >
-                          <option value="available">available</option>
-                          <option value="cancelled">cancelled</option>
-                        </select>
-                      </>
+                    {isBooked === "booked" ? (
+                      isBooked
+                    ) : (
+                      <StatusToggle initialStatus={isBooked} slotId={slotId} />
                     )}
-                  </TableCell>
-                  <TableCell>
+                  </TableCell> */}
+                  {/* <TableCell>
                     <div className="flex gap-2">
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
@@ -180,7 +183,7 @@ const SlotDataTable = () => {
                         </AlertDialogContent>
                       </AlertDialog>
                     </div>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               );
             })}

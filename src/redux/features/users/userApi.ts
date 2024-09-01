@@ -4,21 +4,21 @@ const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => ({
-        url: "/auth",
+        url: "/users",
       }),
       providesTags: ["users"],
     }),
 
     getSingleUser: builder.query({
-      query: (email) => ({
-        url: `/auth?email=${email}`,
+      query: (userId) => ({
+        url: `/users/${userId}`,
       }),
       providesTags: ["users"],
     }),
-    
+
     updateUser: builder.mutation({
-      query: ({id, data}) => ({
-        url: `/auth/${id}`,
+      query: ({ id, data }) => ({
+        url: `/users/${id}`,
         method: "PUT",
         body: data,
       }),
@@ -28,5 +28,7 @@ const userApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetUsersQuery, useUpdateUserMutation, useGetSingleUserQuery,
+  useGetUsersQuery,
+  useUpdateUserMutation,
+  useGetSingleUserQuery,
 } = userApi;

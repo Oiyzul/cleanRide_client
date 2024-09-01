@@ -9,7 +9,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 
-const BookingForm = ({ form, onSubmit }) => {
+const BookingForm = ({ form, onSubmit }: TFormProps) => {
   return (
     <Form {...form}>
       <form
@@ -140,7 +140,9 @@ const BookingForm = ({ form, onSubmit }) => {
           )}
         />
         <div className="mt-8">
-          <Button type="submit" className="w-full">Pay Now</Button>
+          <Button type="submit" className="w-full">
+            Pay Now
+          </Button>
         </div>
       </form>
     </Form>

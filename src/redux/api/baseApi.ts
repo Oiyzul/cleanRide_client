@@ -3,6 +3,7 @@ import { RootState } from "../store";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/api",
+  // baseUrl: "https://carwash-backend-sepia.vercel.app/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState)?.auth?.token;
@@ -21,6 +22,6 @@ const baseQuery = fetchBaseQuery({
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQuery,
-  tagTypes: ["services", "slots", "bookings", "users"],
+  tagTypes: ["services", "slots", "bookings", "users", "reviews"],
   endpoints: () => ({}),
 });

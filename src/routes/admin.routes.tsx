@@ -1,5 +1,4 @@
 import {
-  AddService,
   AdminDashboard,
   CreateSlot,
   ServiceList,
@@ -21,11 +20,6 @@ export const adminPaths = [
         name: "Service List",
         path: "service-list",
         element: <ServiceList />,
-      },
-      {
-        name: "Add Service",
-        path: "create-service",
-        element: <AddService />,
       },
     ],
   },

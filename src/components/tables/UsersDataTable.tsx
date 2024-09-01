@@ -1,4 +1,4 @@
-import { PlusCircle, Trash } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,7 +27,6 @@ import {
   TableRow,
 } from "../ui/table";
 
-import { cn } from "@/lib/utils";
 import {
   useGetUsersQuery,
   useUpdateUserMutation,
@@ -36,7 +35,7 @@ import {
 const UsersDataTable = () => {
   const { data: usersData = [], isLoading } = useGetUsersQuery({});
   const [updateUser] = useUpdateUserMutation();
-
+  console.log("userData", usersData);
   const updateUserRole = async (role: string, id: string) => {
     console.log("role", role);
     const updatedUser = {
@@ -75,7 +74,7 @@ const UsersDataTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {usersData?.data?.map((user) => {
+            {usersData?.data?.map((user: TUser) => {
               const { _id, name, email, address, phone, role } = user;
               return (
                 <TableRow>
@@ -129,10 +128,11 @@ const UsersDataTable = () => {
       </CardContent>
       <CardFooter>
         <div className="text-xs text-muted-foreground">
-          Showing <strong>{`1-${
+          Showing{" "}
+          <strong>{`1-${
             usersData?.data?.length <= 10 ? usersData?.data?.length : 10
-          }`}</strong> of{" "}
-          <strong>{usersData?.data?.length}</strong> slots
+          }`}</strong>{" "}
+          of <strong>{usersData?.data?.length}</strong> users
         </div>
       </CardFooter>
     </Card>

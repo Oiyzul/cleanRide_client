@@ -1,5 +1,5 @@
+import { Logo, MaxWidthWrapper, ScrollToTop } from "@/components";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
-import { MaxWidthWrapper, ScrollToTop } from "@/components";
 import { Link } from "react-router-dom";
 
 const FooterSection = () => {
@@ -8,7 +8,7 @@ const FooterSection = () => {
       <MaxWidthWrapper className="">
         <div className="flex flex-wrap justify-between">
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
-            <h2 className="text-xl font-bold mb-4">CarWash</h2>
+            <Logo />
             <p className="mb-4">1234 Street Name, City, State, 12345</p>
             <p>Email: info@carwash.com</p>
             <p>Phone: (123) 456-7890</p>

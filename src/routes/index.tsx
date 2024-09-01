@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <ProtectedRoute role="admin">
+      <ProtectedRoute role={["admin"]}>
         <DashboardLayout />
       </ProtectedRoute>
     ),
@@ -26,10 +26,11 @@ const router = createBrowserRouter([
   {
     path: "/user",
     element: (
-      <ProtectedRoute role="user">
+      <ProtectedRoute role={["user"]}>
         <DashboardLayout />
       </ProtectedRoute>
     ),
+    //@ts-ignore
     children: routeGenerator(userPaths),
   },
   {

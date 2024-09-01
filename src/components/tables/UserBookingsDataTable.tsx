@@ -15,7 +15,11 @@ import {
   TableRow,
 } from "../ui/table";
 
-const UserBookingsDataTable = ({ bookingsData }) => {
+const UserBookingsDataTable = ({
+  bookingsData,
+}: {
+  bookingsData: TBooking[];
+}) => {
   return (
     <Card x-chunk="dashboard-06-chunk-0">
       <CardHeader>
@@ -41,8 +45,9 @@ const UserBookingsDataTable = ({ bookingsData }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {bookingsData?.map((booking) => {
+            {bookingsData?.map((booking: TBooking) => {
               const {
+                _id,
                 customer: { name: customerName },
                 service: { name: serviceName },
                 slot: { startTime },
@@ -55,7 +60,7 @@ const UserBookingsDataTable = ({ bookingsData }) => {
                 createdAt,
               } = booking;
               return (
-                <TableRow>
+                <TableRow key={`all-bookings-${_id}`}>
                   <TableCell className="sm:table-cell">
                     {customerName}
                   </TableCell>

@@ -3,7 +3,19 @@ import {
   useGetServicesQuery,
 } from "@/redux/features/services/serviceApi";
 import { Plus, Trash } from "lucide-react";
+import { useState } from "react";
 import EditServiceModal from "../modals/EditServiceModal";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 import {
   Card,
   CardContent,
@@ -21,19 +33,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../ui/alert-dialog";
-import { Button } from "../ui/button";
 
 const ServiceDataTable = () => {
   const [open, setOpen] = useState(false);
@@ -62,9 +61,10 @@ const ServiceDataTable = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="hidden w-[100px] sm:table-cell">
+              {/* <TableHead className="hidden w-[100px] sm:table-cell">
                 <span className="sr-only">img</span>
-              </TableHead>
+              </TableHead> */}
+              <TableHead className="w-[100px] sm:table-cell">Id</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Description</TableHead>
               <TableHead className="hidden md:table-cell">Duration</TableHead>
@@ -77,11 +77,11 @@ const ServiceDataTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {serviceData?.data?.map((service) => {
+            {serviceData?.data?.map((service:TService) => {
               const {
                 _id,
                 name,
-                imgUrl,
+                // imgUrl,
                 description,
                 price,
                 duration,
@@ -89,7 +89,7 @@ const ServiceDataTable = () => {
               } = service;
               return (
                 <TableRow>
-                  <TableCell className="hidden sm:table-cell">
+                  {/* <TableCell className="hidden sm:table-cell">
                     <img
                       alt="Product img"
                       className="aspect-square rounded-md object-cover"
@@ -97,7 +97,8 @@ const ServiceDataTable = () => {
                       src={imgUrl}
                       width="64"
                     />
-                  </TableCell>
+                  </TableCell> */}
+                  <TableCell className="sm:table-cell">{_id}</TableCell>
                   <TableCell className="font-medium">{name}</TableCell>
                   <TableCell>{description}</TableCell>
                   <TableCell className="hidden md:table-cell">
@@ -140,7 +141,6 @@ const ServiceDataTable = () => {
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
-                              
                               onClick={() => handleDelete(_id)}
                             >
                               Delete
@@ -158,10 +158,11 @@ const ServiceDataTable = () => {
       </CardContent>
       <CardFooter>
         <div className="text-xs text-muted-foreground">
-          Showing <strong>{`1-${
+          Showing{" "}
+          <strong>{`1-${
             serviceData?.data?.length <= 10 ? serviceData?.data?.length : 10
-          }`}</strong> of{" "}
-          <strong>{serviceData?.data?.length}</strong> services
+          }`}</strong>{" "}
+          of <strong>{serviceData?.data?.length}</strong> services
         </div>
       </CardFooter>
     </Card>

@@ -1,16 +1,19 @@
-import { UpcomingBookings, UserInfo } from "@/components";
+import { UserInfo } from "@/components";
+import UpcomingBookingItem from "@/components/others/UpcomingBookingItem";
 import UserBookingsDataTable from "@/components/tables/UserBookingsDataTable";
 import { selectUser } from "@/redux/features/auth/authSlice";
 import { useGetSingleUserBookingsQuery } from "@/redux/features/bookings/bookingApi";
-import { useGetSingleUserQuery } from "@/redux/features/users/userApi";
 import { useAppSelector } from "@/redux/hooks";
+import { getUpcomingBookings } from "@/utils/getUpcomingBookings";
 
 const UserDashboard = () => {
   const user = useAppSelector(selectUser);
-  const { data: userData = {}, isLoading } = useGetSingleUserQuery(user?.email);
 
-  const { data: bookingsData = [], isLoading: bookingIsLoading } =
-    useGetSingleUserBookingsQuery(userData?.data?._id);
+  const { data: bookingsData = [], isLoading } = useGetSingleUserBookingsQuery(
+    user?._id || ""
+  );
+
+  const upcomingBookings = getUpcomingBookings(bookingsData?.data);
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -22,18 +25,27 @@ const UserDashboard = () => {
         </h1>
         <p className="text-sm text-gray-500">Welcome, {user?.name}</p>
 
-        <UserInfo userData={userData.data} />
-        {/* {!bookingIsLoading && bookingData?.data?.length > 0 &&
-          bookingData.data.map((booking) => <BookingInfo booking={booking} />)} */}
-        {bookingIsLoading ? (
-          <p>Loading bookings...</p>
-        ) : (
-          <>
-            <UpcomingBookings bookingsData={bookingsData?.data} />
+        <div className="flex gap-5 flex-wrap">
+          {user && <UserInfo userData={user} />}
 
-            <UserBookingsDataTable bookingsData={bookingsData.data} />
-          </>
-        )}
+          {upcomingBookings?.length > 0 ? (
+            <div className="flex gap-5 flex-wrap">
+              {upcomingBookings?.map((booking: TBooking, i: number) => (
+                <UpcomingBookingItem
+                  booking={booking}
+                  counter={i}
+                  countingAll={false}
+                  key={`upcoming-${booking._id}`}
+                />
+              ))}
+            </div>
+          ) : (
+            <div>
+              <p className="text-2xl font-semibold">No upcoming booking.</p>
+            </div>
+          )}
+        </div>
+        <UserBookingsDataTable bookingsData={bookingsData.data} />
       </div>
     </div>
   );

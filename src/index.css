@@ -83,3 +83,7 @@
 .recent-reviews {
   @apply mt-4;
 }
+
+.custom-clip {
+  clip-path: polygon(8% 57%, 100% 57%, 100% 100%, 0% 100%);
+}

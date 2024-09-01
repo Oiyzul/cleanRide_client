@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { IKUpload } from "imagekitio-react";
+import { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -12,25 +12,33 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 
-const ServiceForm = ({ form, onSubmit }) => {
-  const [imageLoading, setImageLoading] = useState(false);
-  const [imagePreview, setImagePreview] = useState("");
+const ServiceForm = ({ form, onSubmit }: TFormProps) => {
+  const ikUploadRef = useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [thumbnailUrl, setThumbnailUrl] = useState("");
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImagePreview(reader.result);
-        setImageLoading(true);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setImagePreview("");
-      setImageLoading(false);
-    }
+  const onError = (err: any) => {
+    console.log("Error", err);
+    setIsUploading(false);
   };
 
+  const onUploadStart = () => {
+    setIsUploading(true);
+  };
+
+  const onSuccess = (res: any) => {
+    console.log("Success", res);
+
+    setThumbnailUrl(res.thumbnailUrl);
+    form.setValue("imgUrl", res.url);
+    setIsUploading(false);
+  };
+
+  const onUploadProgress = (progress: any) => {
+    console.log("Upload-progress", progress);
+  };
+
+  console.log(form.getValues());
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
@@ -88,29 +96,31 @@ const ServiceForm = ({ form, onSubmit }) => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="imgUrl"
-          render={({ field: {value,onChange, ...fieldProps} }) => (
-            <FormItem>
-              <FormLabel>Upload Image</FormLabel>
-              <FormControl>
-                <Input type="file" accept="image/*" {...fieldProps} placeholder="Image" onChange={onChange} />
-              </FormControl>
-              <FormDescription>Choose an image file to upload.</FormDescription>
-              <FormMessage />
-              {/* Display the image preview */}
-              {/* {imageLoading && imagePreview && (
-                <img
-                  src={imagePreview}
-                  alt="Selected Image"
-                  style={{ maxWidth: "100%", maxHeight: "200px" }}
-                />
-              )} */}
-            </FormItem>
+        <>
+          {/* <ImageUpload ref={ikUploadRef} /> */}
+          <IKUpload
+            onError={onError}
+            onSuccess={onSuccess}
+            onUploadProgress={onUploadProgress}
+            onUploadStart={onUploadStart}
+            className="hidden"
+            ref={ikUploadRef}
+          />
+          {ikUploadRef && (
+            <Button onClick={() => ikUploadRef?.current?.click()}>
+              {isUploading ? "uploading..." : "Upload"}
+            </Button>
           )}
-        />
-        <Button type="submit">Submit</Button>
+        </>
+        {thumbnailUrl && (
+          <div className="h-[300px]">
+            <img src={thumbnailUrl} alt="Preview" className="w-full h-full" />
+          </div>
+        )}
+
+        <Button type="submit" disabled={isUploading}>
+          Submit
+        </Button>
       </form>
     </Form>
   );

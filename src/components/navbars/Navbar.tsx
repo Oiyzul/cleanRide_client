@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout, selectUser } from "@/redux/features/auth/authSlice";
-import { MaxWidthWrapper } from "@/components";
+import { Logo, MaxWidthWrapper } from "@/components";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -25,9 +25,7 @@ const Navbar = () => {
       <nav className="h-[80px] md:h-[80px] px-4 flex items-center p-2 md:p-4 xl:p-8">
         <MaxWidthWrapper>
           <div className="w-full flex items-center justify-between relative">
-            <h1 className="cursor-pointer text-2xl font-[700]">
-              <Link to="/">CarWash</Link>
-            </h1>
+            <Logo />
             <div>
               <ul className="hidden md:flex items-center gap-5 font-semibold">
                 <li className="text-gray-200 hover:text-white">

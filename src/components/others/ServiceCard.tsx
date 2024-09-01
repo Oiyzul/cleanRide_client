@@ -2,15 +2,15 @@ import { ArrowBigRightDash } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./../ui/button";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from "./../ui/card";
 
-const ServiceCard = ({ _id, name, description, imgUrl }) => {
+const ServiceCard = ({ _id, name, description, imgUrl }: TService) => {
   return (
     <Card>
       <CardHeader>

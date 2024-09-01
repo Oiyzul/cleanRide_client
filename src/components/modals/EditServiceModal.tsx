@@ -1,14 +1,20 @@
 import { useEditServiceMutation } from "@/redux/features/services/serviceApi";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import ServiceModal from "./ServiceModal";
 import { createServiceValidationSchema } from "./schemas";
 
-const EditServiceModal = ({ data, setOpen }) => {
+const EditServiceModal = ({
+  data,
+  setOpen,
+}: {
+  data: TService;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [editService] = useEditServiceMutation();
 
   const { _id, name, price, duration, description, imgUrl } = data || {};
-  
+
   const title = "Edit Service";
 
   const form = useForm({
@@ -22,7 +28,7 @@ const EditServiceModal = ({ data, setOpen }) => {
     },
   });
 
-  async function onSubmit(data) {
+  async function onSubmit(data: FieldValues) {
     const updatedData = {
       id: _id,
       service: data,

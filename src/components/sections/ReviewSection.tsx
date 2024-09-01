@@ -1,52 +1,74 @@
+import { MaxWidthWrapper } from "@/components";
+import { selectToken, selectUser } from "@/redux/features/auth/authSlice";
+import {
+  useAddReviewMutation,
+  useGetAllReviewsQuery,
+} from "@/redux/features/reviews/reviewApi";
+import { useAppSelector } from "@/redux/hooks";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { MaxWidthWrapper } from "@/components";
 import { Button } from "../ui/button";
-import { useAppSelector } from "@/redux/hooks";
-import { selectToken } from "@/redux/features/auth/authSlice";
 
 const ReviewSection = () => {
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(0);
-  const [reviews, setReviews] = useState([
-    {
-      rating: 5,
-      feedback:
-        "Excellent service, loved the atmosphere! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione ipsa quo itaque. Eos necessitatibus dolorem, aliquid ullam nam excepturi? Reiciendis?",
-    },
-    {
-      rating: 4,
-      feedback:
-        "Good service, but the waiting area was not good. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione ipsa quo itaque. Eos necessitatibus dolorem, aliquid ullam nam excepturi? Reiciendis?",
-    },
-    {
-      rating: 3,
-      feedback:
-        "Service was average, but the atmosphere was good. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione ipsa quo itaque. Eos necessitatibus dolorem, aliquid ullam nam excepturi? Reiciendis?",
-    },
-  ]);
+  // const [reviews, setReviews] = useState([
+  //   {
+  //     rating: 5,
+  //     feedback:
+  //       "Excellent service, loved the atmosphere! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione ipsa quo itaque. Eos necessitatibus dolorem, aliquid ullam nam excepturi? Reiciendis?",
+  //   },
+  //   {
+  //     rating: 4,
+  //     feedback:
+  //       "Good service, but the waiting area was not good. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione ipsa quo itaque. Eos necessitatibus dolorem, aliquid ullam nam excepturi? Reiciendis?",
+  //   },
+  //   {
+  //     rating: 3,
+  //     feedback:
+  //       "Service was average, but the atmosphere was good. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione ipsa quo itaque. Eos necessitatibus dolorem, aliquid ullam nam excepturi? Reiciendis?",
+  //   },
+  // ]);
 
   const token = useAppSelector(selectToken);
+  const user = useAppSelector(selectUser);
+  const [addReview] = useAddReviewMutation();
+  const {
+    data: reviews = [],
+    isLoading,
+  } = useGetAllReviewsQuery({});
 
-  const handleRating = (value) => {
-    setRating(value);
-  };
-
-  const handleSubmit = () => {
-    if (feedback && rating) {
-      const newReview = { rating, feedback };
-      setReviews([...reviews, newReview]);
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    if (feedback && rating && user) {
+      const newReview = {
+        customerId: user?._id,
+        customerName: user?.name,
+        rating,
+        feedback,
+      };
+      // setReviews([...reviews, newReview]);
+      const res = await addReview(newReview).unwrap();
+      if (res.success) {
+        console.log("Review added successfully");
+      }
       setFeedback("");
       setRating(0);
     }
   };
 
-  const averageRating = reviews.length
-    ? (
-        reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
-      ).toFixed(1)
-    : 0;
+  if (isLoading) return <div>Loading</div>;
+
+  const averageRating =
+    reviews?.data?.length > 0
+      ? (
+          reviews.data.reduce(
+            (sum: number, review: TReview) => sum + review.rating,
+            0
+          ) / reviews.data.length
+        ).toFixed(1)
+      : 0;
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center pt-5 pb-10">
@@ -74,36 +96,41 @@ const ReviewSection = () => {
         <div className="my-10 ">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             <div className="col-span-2 flex flex-col md:flex-row gap-5 flex-wrap">
-              {reviews.slice(-2).map((review, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="flex-1"
-                >
-                  <div className="bg-white p-2 h-[180px] border rounded-md">
-                    <div className="flex gap-5 p-0">
-                      <img
-                        src="/carwash.jpg"
-                        alt=""
-                        className="w-32 h-36 object-cover rounded-2xl"
-                      />
-                      <div className="flex flex-col justify-between">
-                        <p>{review.feedback.substring(0, 120)}</p>
-                        <div>
-                          <p className="font-semibold">John Doe</p>
-                          <p className="text-gray-300">Manager</p>
+              {reviews?.data?.slice(0, 2).map((review: TReview) => {
+                console.log("review", review);
+                return (
+                  <motion.div
+                    key={review._id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex-1"
+                  >
+                    <div className="bg-white p-2 h-[180px] border rounded-md">
+                      <div className="flex gap-5 p-0">
+                        <img
+                          src="/carwash.jpg"
+                          alt=""
+                          className="w-32 h-36 object-cover rounded-2xl"
+                        />
+                        <div className="flex flex-col justify-between">
+                          <p>{review.feedback.substring(0, 120)}</p>
+                          <div>
+                            <p className="font-semibold">
+                              {review.customerName}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
 
+            {/* revire form */}
             <div className="col-span-1 border rounded-md">
-              <div className="bg-white p-2">
+              <form className="bg-white p-2">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -122,7 +149,7 @@ const ReviewSection = () => {
                         className={`cursor-pointer text-2xl ${
                           rating >= star ? "text-yellow-500" : "text-gray-300"
                         }`}
-                        onClick={() => handleRating(star)}
+                        onClick={() => setRating(star)}
                       >
                         ★
                       </span>
@@ -135,7 +162,7 @@ const ReviewSection = () => {
                     Submit
                   </button>
                 </motion.div>
-              </div>
+              </form>
             </div>
           </div>
         </div>

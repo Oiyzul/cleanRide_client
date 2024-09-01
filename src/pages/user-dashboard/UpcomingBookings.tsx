@@ -1,34 +1,19 @@
+import UpcomingBookingItem from "@/components/others/UpcomingBookingItem";
 import UserBookingsDataTable from "@/components/tables/UserBookingsDataTable";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { selectUser } from "@/redux/features/auth/authSlice";
 import { useGetSingleUserBookingsQuery } from "@/redux/features/bookings/bookingApi";
-import { useGetSingleUserQuery } from "@/redux/features/users/userApi";
 import { useAppSelector } from "@/redux/hooks";
+import { getUpcomingBookings } from "@/utils/getUpcomingBookings";
 
 const UpcomingBookings = () => {
   const user = useAppSelector(selectUser);
-
-  const { data: userData = {}, isLoading } = useGetSingleUserQuery(user?.email);
-
-  const { data: bookingsData = [], isLoading: bookingIsLoading } =
-    useGetSingleUserBookingsQuery(userData?.data?._id);
+  //@ts-ignore
+  const { data: bookingsData = [], isLoading } = useGetSingleUserBookingsQuery(user?._id);
 
   if (isLoading) return <p>Loading...</p>;
 
-  const getAmPm = (time) => {
-    const [hours, minutes] = time.split(":").map(Number);
-    return hours < 12 ? "AM" : "PM";
-  };
+  const upcomingBookings = getUpcomingBookings(bookingsData?.data);
 
-  const upcomingBookings = bookingsData?.data?.filter((booking) => {
-    const startTimeInMs = new Date(
-      `${booking.slot.date}T${booking.slot.startTime}`
-    ).getTime();
-    // Present time in milliseconds
-    const presentTimeInMs = new Date().getTime();
-
-    return startTimeInMs > presentTimeInMs;
-  });
   return (
     <div>
       <div>
@@ -38,27 +23,19 @@ const UpcomingBookings = () => {
           </div>
         ) : (
           <div className="flex gap-10">
-            {upcomingBookings?.map((booking) => (
-              <Card
-                key={booking._id}
-                className="w-[280px] p-4 flex flex-col items-center"
-              >
-                <CardTitle>{booking.service.name}</CardTitle>
-                <CardContent>
-                  <p>
-                    Slot:{" "}
-                    {`${booking.slot.startTime} ${getAmPm(
-                      booking.slot.startTime
-                    )}`}
-                  </p>
-                  <p>Date: {booking.slot.date}</p>
-                </CardContent>
-              </Card>
+            {upcomingBookings?.map((booking: TBooking, i: number) => (
+              <UpcomingBookingItem
+                booking={booking}
+                counter={i}
+                countingAll={true}
+              />
             ))}
           </div>
         )}
       </div>
-      <UserBookingsDataTable bookingsData={upcomingBookings} />
+      {upcomingBookings?.length > 0 ? (
+        <UserBookingsDataTable bookingsData={upcomingBookings} />
+      ) : null}
     </div>
   );
 };

@@ -4,98 +4,15 @@ import {
   BookCheck,
   CalendarPlus,
   ClipboardList,
-  CopyPlus,
   LayoutDashboard,
   ListTodo,
-  UserRoundCheck,
+  UserRoundCheck
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const DashboardSidebar = () => {
   const user = useAppSelector(selectUser);
 
-  const sidebarItems = [
-    {
-      title: "Dashboard",
-      items: [
-        {
-          icon: <LayoutDashboard />,
-          label: "Dashboard",
-          href: `/${user?.role}/dashboard`,
-          visible: ["admin", "user"],
-        },
-      ],
-    },
-    {
-      title: "Service Management",
-      items: [
-        {
-          icon: <ClipboardList />,
-          label: "Service List",
-          href: "service-list",
-          visible: ["admin"],
-        },
-        {
-          icon: <CopyPlus />,
-          label: "Add Service",
-          href: "create-service",
-          visible: ["admin"],
-        },
-      ],
-    },
-    {
-      title: "Slot Management",
-      items: [
-        {
-          icon: <ListTodo />,
-          label: "Slot List",
-          href: "slot-list",
-          visible: ["admin"],
-        },
-        {
-          icon: <CalendarPlus />,
-          label: "Create Slot",
-          href: "create-slot",
-          visible: ["admin"],
-        },
-      ],
-    },
-    {
-      title: "User Management",
-      items: [
-        {
-          icon: <UserRoundCheck />,
-          label: "User List",
-          href: "users",
-          visible: ["admin"],
-        },
-        {
-          icon: <BookCheck />,
-          label: "Bookings",
-          href: "bookings",
-          visible: ["admin"],
-        },
-        {
-          icon: <BookCheck />,
-          label: "Profile",
-          href: "me",
-          visible: ["user"],
-        },
-        {
-          icon: <BookCheck />,
-          label: "Past Bookings",
-          href: "past-bookings",
-          visible: ["user"],
-        },
-        {
-          icon: <BookCheck />,
-          label: "Upcoming Bookings",
-          href: "upcoming-bookings",
-          visible: ["user"],
-        },
-      ],
-    },
-  ];
   // return (
   //   <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
   //     <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
@@ -191,24 +108,22 @@ const DashboardSidebar = () => {
   return (
     <div className="sticky top-10 mt-4 text-sm">
       <Link to="/">CarWash</Link>
-      {sidebarItems?.map((i) => (
+      {(user?.role === "admin" ? adminSidebar : userSidebar)?.map((i) => (
         <div className="flex flex-col gap-2" key={i.title}>
           <span className="hidden lg:block text-gray-500 font-light my-4">
             {i.title}
           </span>
           {i.items.map((item) => {
-            if (item.visible.includes(user?.role)) {
-              return (
-                <Link
-                  to={item.href}
-                  key={item.label}
-                  className="flex items-center justify-center lg:justify-start gap-4 text-gray-900 py-2 md:px-2 rounded-md hover:bg-lamaSkyLight"
-                >
-                  {item.icon}
-                  <span className="hidden lg:block">{item.label}</span>
-                </Link>
-              );
-            }
+            return (
+              <Link
+                to={item.href}
+                key={item.label}
+                className="flex items-center justify-center lg:justify-start gap-4 text-gray-900 py-2 md:px-2 rounded-md hover:bg-lamaSkyLight"
+              >
+                {item.icon}
+                <span className="hidden lg:block">{item.label}</span>
+              </Link>
+            );
           })}
         </div>
       ))}
@@ -217,3 +132,84 @@ const DashboardSidebar = () => {
 };
 
 export default DashboardSidebar;
+
+const adminSidebar = [
+  {
+    title: "Dashboard",
+    items: [
+      {
+        icon: <LayoutDashboard />,
+        label: "Dashboard",
+        href: "/admin/dashboard",
+      },
+    ],
+  },
+  {
+    title: "Service Management",
+    items: [
+      {
+        icon: <ClipboardList />,
+        label: "Service List",
+        href: "service-list",
+      },
+    ],
+  },
+  {
+    title: "Slot Management",
+    items: [
+      {
+        icon: <ListTodo />,
+        label: "Slot List",
+        href: "slot-list",
+      },
+      {
+        icon: <CalendarPlus />,
+        label: "Create Slot",
+        href: "create-slot",
+      },
+    ],
+  },
+  {
+    title: "User Management",
+    items: [
+      {
+        icon: <UserRoundCheck />,
+        label: "User List",
+        href: "users",
+      },
+      {
+        icon: <BookCheck />,
+        label: "All Bookings",
+        href: "bookings",
+      },
+    ],
+  },
+];
+
+const userSidebar = [
+  {
+    title: "Dashboard",
+    items: [
+      {
+        icon: <LayoutDashboard />,
+        label: "Dashboard",
+        href: "/user/dashboard",
+      },
+      {
+        icon: <BookCheck />,
+        label: "Past Bookings",
+        href: "past-bookings",
+      },
+      {
+        icon: <BookCheck />,
+        label: "Upcoming Bookings",
+        href: "upcoming-bookings",
+      },
+      {
+        icon: <BookCheck />,
+        label: "Profile",
+        href: "profile",
+      },
+    ],
+  },
+];

@@ -37,6 +37,14 @@ const serviceApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["services"],
     }),
+    createSlot: builder.mutation({
+      query: (data) => ({
+        url: `/services/slots`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["slots"],
+    }),
   }),
 });
 
@@ -46,4 +54,5 @@ export const {
   useAddServiceMutation,
   useEditServiceMutation,
   useDeleteServiceMutation,
+  useCreateSlotMutation,
 } = serviceApi;

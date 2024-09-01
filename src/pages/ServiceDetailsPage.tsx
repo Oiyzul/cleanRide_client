@@ -2,14 +2,15 @@
 import { MaxWidthWrapper } from "@/components";
 import { useGetSingleServiceQuery } from "@/redux/features/services/serviceApi";
 import { useGetSlotsQuery } from "@/redux/features/slots/slotApi";
+import { getAmPm } from "@/utils/getAmPm";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-const ServiceDetails = ({ service }) => {
+const ServiceDetails = ({ service }: { service: TService }) => {
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-  const [selectedSlot, setSelectedSlot] = useState({});
+  const [selectedSlot, setSelectedSlot] = useState<TSlot>();
 
   const {
     data = [],
@@ -19,16 +20,13 @@ const ServiceDetails = ({ service }) => {
     { key: "serviceId", value: service._id },
     { key: "date", value: selectedDate },
   ]);
-  // console.log(data?.data?.length);
 
-  const bookedSlots = ["10:00 AM", "01:00 PM"]; // Example of booked slots
-
-  const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate(event?.target.value);
     refetch();
   };
 
-  const handleSlotClick = (slot) => {
+  const handleSlotClick = (slot: TSlot) => {
     setSelectedSlot(slot);
     console.log("selected slot", selectedSlot);
   };
@@ -70,7 +68,7 @@ const ServiceDetails = ({ service }) => {
         <label className="block mb-2">Available Time Slots:</label>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 lg:gap-4">
           {data?.data?.length &&
-            data?.data?.map((slot) => (
+            data?.data?.map((slot: TSlot) => (
               <button
                 key={slot._id}
                 onClick={() => handleSlotClick(slot)}
@@ -81,7 +79,8 @@ const ServiceDetails = ({ service }) => {
                 } ${selectedSlot?._id === slot._id && "bg-green-500"} `}
                 disabled={slot.isBooked !== "available"}
               >
-                {slot.startTime} | {slot.endTime}
+                {`${slot.startTime} ${getAmPm(slot.startTime)}`} -{" "}
+                {`${slot.endTime} ${getAmPm(slot.endTime)}`}
               </button>
             ))}
         </div>
@@ -100,7 +99,7 @@ const ServiceDetails = ({ service }) => {
 
 const ServiceDetailsPage = () => {
   const { id } = useParams();
-  const { data = [], isLoading } = useGetSingleServiceQuery(id);
+  const { data = [], isLoading } = useGetSingleServiceQuery(id as string);
   return (
     <MaxWidthWrapper className="p-6">
       {isLoading ? (

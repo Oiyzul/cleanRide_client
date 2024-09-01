@@ -1,11 +1,16 @@
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { tokenDecode } from "@/utils/tokenDecode";
+// import { tokenDecode } from "@/utils/tokenDecode";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  
+  const from = (location.state?.from?.pathname || '/')
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -13,24 +18,25 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     console.log(formData);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
       const res = await login(formData).unwrap();
       console.log("res", res);
-      const user = tokenDecode(res.token);
+      // const user = tokenDecode(res.token);
 
-      dispatch(setUser({ user: user, token: res.token }));
+      dispatch(setUser({ user: res.data, token: res.token }));
 
       //display success message
 
-      navigate("/");
+      navigate(from, {replace:true});
     } catch (error: any) {
       console.log(error);
       setError(error.message);

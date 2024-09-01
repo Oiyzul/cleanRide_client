@@ -20,6 +20,7 @@ const bookingApi = baseApi.injectEndpoints({
 
     getSingleUserBookings: builder.query({
       query: (id: string) => ({
+        //change it my bookings
         url: `/bookings/${id}`,
       }),
     }),

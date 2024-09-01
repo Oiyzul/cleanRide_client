@@ -7,8 +7,8 @@ const slotApi = baseApi.injectEndpoints({
         const params = new URLSearchParams();
 
         if (args.length > 0) {
-          args.forEach((query) => {
-            console.log('query', query.key, query.value)
+          args.forEach((query:any) => {
+            console.log("query", query.key, query.value);
             params.append(query.key, query.value);
           });
         }
@@ -21,14 +21,15 @@ const slotApi = baseApi.injectEndpoints({
       },
       providesTags: ["slots"],
     }),
-    updateSlot: builder.mutation ({
-      query : ({id, data}) => {
-        console.log('api2',  data)
-        return{
-        url: `/slots/update-slot/${id}`,
-        method: 'PUT',
-        body: data,
-      }},
+    updateSlot: builder.mutation({
+      query: ({ id, data }) => {
+        console.log("api2", data);
+        return {
+          url: `/slots/update-slot/${id}`,
+          method: "PUT",
+          body: data,
+        };
+      },
       invalidatesTags: ["slots"],
     }),
   }),

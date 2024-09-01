@@ -1,15 +1,3 @@
-import { PlusCircle } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../ui/alert-dialog";
 import {
   Card,
   CardContent,
@@ -60,7 +48,7 @@ const BookingsDataTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {bookingsData?.data?.map((booking) => {
+            {bookingsData?.data?.map((booking:TBooking) => {
               const {
                 customer: { name: customerName },
                 service: { name: serviceName },

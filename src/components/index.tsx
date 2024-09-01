@@ -11,15 +11,16 @@ import ServiceForm from "./forms/ServiceForm";
 import UserForm from "./forms/UserForm";
 import AddServiceModal from "./modals/AddServiceModal";
 import EditServiceModal from "./modals/EditServiceModal";
-import UpdateUserInfo from "./modals/UpdateUserInfo";
 import BookingInfo from "./others/BookingInfo";
 import ImageSlider from "./others/ImageSlider";
 import MaxWidthWrapper from "./others/MaxWidthWrapper";
 import ScrollToTop from "./others/ScrollToTop";
 import ServiceCard from "./others/ServiceCard";
 import ServiceItem from "./others/ServiceIItem";
-import UpcomingBookings from "./others/UpcomingBookings";
+import UpcomingBookingItem from "./others/UpcomingBookingItem";
 import UserInfo from "./others/UserInfo";
+import UpdateUserInfo from "./others/UpdateUserInfo";
+import Logo from "./others/Logo";
 
 export {
   BrandingSection,
@@ -35,13 +36,14 @@ export {
   UserForm,
   AddServiceModal,
   EditServiceModal,
-  UpdateUserInfo,
   BookingInfo,
   ImageSlider,
   MaxWidthWrapper,
   ScrollToTop,
   ServiceCard,
   ServiceItem,
-  UpcomingBookings,
+  UpcomingBookingItem as UpcomingBookings,
   UserInfo,
+  UpdateUserInfo,
+  Logo
 };

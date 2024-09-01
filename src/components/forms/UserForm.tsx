@@ -9,7 +9,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 
-const UserForm = ({ form, onSubmit }) => {
+const UserForm = ({ form, onSubmit }: TFormProps) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">

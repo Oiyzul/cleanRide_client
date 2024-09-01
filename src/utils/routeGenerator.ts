@@ -1,4 +1,4 @@
-import { TRoute, TRouteItem } from "@/types";
+import { TRoute, TRouteItem } from "../types/route.type";
 
 export const routeGenerator = (items:TRouteItem[]) => {
     const routes = items.reduce((acc:TRoute[], item:TRouteItem) => {

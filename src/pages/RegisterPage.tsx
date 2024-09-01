@@ -32,7 +32,8 @@ const RegisterPage = () => {
     console.log(formData);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     //toast message
     try {
       if (formData.email && formData.password) {

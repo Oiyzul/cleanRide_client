@@ -1,9 +1,9 @@
 import { Button } from "./../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "./../ui/card";
 
-const BookingInfo = ({ booking }) => {
+const BookingInfo = ({ booking }: { booking: TBooking }) => {
   const { vehicleType, vehicleBrand, vehicleModel } = booking;
-  
+
   return (
     <Card className="max-w-[480px]">
       <CardHeader>Booking Information</CardHeader>

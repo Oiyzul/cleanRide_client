@@ -1,7 +1,6 @@
 
-import { UserDashboard } from "@/pages/user-dashboard";
-import PastBookings from "@/pages/user-dashboard/PastBookings";
-import UpcomingBookings from "@/pages/user-dashboard/UpcomingBookings";
+import { PastBookings, Profile, UpcomingBookings, UserDashboard } from "@/pages/user-dashboard";
+
 
 export const userPaths = [
   {
@@ -21,6 +20,11 @@ export const userPaths = [
         name: "Upcoming Bookings",
         path: "upcoming-bookings",
         element: <UpcomingBookings />
+      },
+      {
+        name: "Profile",
+        path: "profile",
+        element: <Profile />
       }
     ]
   }
