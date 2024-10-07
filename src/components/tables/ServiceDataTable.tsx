@@ -38,7 +38,7 @@ const ServiceDataTable = () => {
   const [open, setOpen] = useState(false);
   const { data: serviceData = [], isLoading } = useGetServicesQuery({});
   const [deleteService] = useDeleteServiceMutation();
-
+  console.log(serviceData);
   if (isLoading) return <div>Loading...</div>;
 
   const handleDelete = async (id: string) => {
@@ -50,23 +50,24 @@ const ServiceDataTable = () => {
     }
   };
   return (
-    <Card x-chunk="dashboard-06-chunk-0">
+    <Card>
       <CardHeader>
         <CardTitle>Services</CardTitle>
         <CardDescription>
-          Manage your services and view their sales performance.
+          Manage services and view their sales performance.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              {/* <TableHead className="hidden w-[100px] sm:table-cell">
-                <span className="sr-only">img</span>
-              </TableHead> */}
               <TableHead className="w-[100px] sm:table-cell">Id</TableHead>
+              <TableHead className="hidden w-[100px] sm:table-cell">
+                <span className="sr-only">img</span>
+              </TableHead>
               <TableHead>Name</TableHead>
-              <TableHead>Description</TableHead>
+              {/* <TableHead>Description</TableHead> */}
+              <TableHead>Features</TableHead>
               <TableHead className="hidden md:table-cell">Duration</TableHead>
               <TableHead className="hidden md:table-cell">Price</TableHead>
               <TableHead className="hidden md:table-cell">Created at</TableHead>
@@ -77,19 +78,21 @@ const ServiceDataTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {serviceData?.data?.map((service:TService) => {
+            {serviceData?.data?.map((service: TService) => {
               const {
                 _id,
                 name,
-                // imgUrl,
-                description,
+                imgUrl,
+                // description,
+                features,
                 price,
                 duration,
                 createdAt,
               } = service;
               return (
                 <TableRow>
-                  {/* <TableCell className="hidden sm:table-cell">
+                  <TableCell className="sm:table-cell">{_id}</TableCell>
+                  <TableCell className="hidden sm:table-cell">
                     <img
                       alt="Product img"
                       className="aspect-square rounded-md object-cover"
@@ -97,10 +100,14 @@ const ServiceDataTable = () => {
                       src={imgUrl}
                       width="64"
                     />
-                  </TableCell> */}
-                  <TableCell className="sm:table-cell">{_id}</TableCell>
+                  </TableCell>
                   <TableCell className="font-medium">{name}</TableCell>
-                  <TableCell>{description}</TableCell>
+                  {/* <TableCell>{description}</TableCell> */}
+                  <TableCell>
+                    {features.map((feature, index) => (
+                      <div key={index}>{feature}</div>
+                    ))}
+                  </TableCell>
                   <TableCell className="hidden md:table-cell">
                     {duration}
                   </TableCell>

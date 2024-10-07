@@ -41,6 +41,8 @@ type TService = {
   price: number;
   duration: number;
   imgUrl?: string;
+  features: string[];
+  unavailableFeatures?: string[];
   isDeleted: boolean;
   createdAt: Date;
 };
@@ -56,9 +58,9 @@ type TSlot = {
 };
 
 type TFormProps = {
-  form: UseFormReturn<FieldValues>
+  form: UseFormReturn<FieldValues>;
   onSubmit: SubmitHandler<FieldValues>;
-}
+};
 type TReview = {
   _id: Types.ObjectId;
   customerId: Types.ObjectId;

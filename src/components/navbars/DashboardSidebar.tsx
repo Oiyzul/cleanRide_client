@@ -6,6 +6,7 @@ import {
   ClipboardList,
   LayoutDashboard,
   ListTodo,
+  PlusCircle,
   UserRoundCheck
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -151,6 +152,11 @@ const adminSidebar = [
         icon: <ClipboardList />,
         label: "Service List",
         href: "service-list",
+      },
+      {
+        icon: <PlusCircle />,
+        label: "Add Service",
+        href: "add-service",
       },
     ],
   },

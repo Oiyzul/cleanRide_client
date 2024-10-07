@@ -1,5 +1,5 @@
 import BookingForm from "@/components/forms/BookingForm";
-import { createBookingValidationSchema } from "@/components/modals/schemas";
+import { createBookingValidationSchema } from "@/validationSchemas/schemas";
 import { selectUser } from "@/redux/features/auth/authSlice";
 import { useCreateBookingMutation } from "@/redux/features/bookings/bookingApi";
 import { useAppSelector } from "@/redux/hooks";

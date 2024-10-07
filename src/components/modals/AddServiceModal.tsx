@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import ServiceModal from "./ServiceModal";
-import { createServiceValidationSchema } from "./schemas";
+import { createServiceValidationSchema } from "../../validationSchemas/schemas";
 import { useAddServiceMutation } from "@/redux/features/services/serviceApi";
 import { z } from "zod";
 

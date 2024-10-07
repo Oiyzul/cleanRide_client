@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 95%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -85,7 +85,7 @@
 }
 
 .custom-clip {
-  clip-path: polygon(8% 57%, 100% 57%, 100% 100%, 0% 100%);
+  clip-path: polygon(15% 57%, 100% 57%, 100% 100%, 0% 100%);
 }
 
 .logo-clip {

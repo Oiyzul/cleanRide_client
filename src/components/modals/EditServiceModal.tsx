@@ -2,7 +2,7 @@ import { useEditServiceMutation } from "@/redux/features/services/serviceApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, useForm } from "react-hook-form";
 import ServiceModal from "./ServiceModal";
-import { createServiceValidationSchema } from "./schemas";
+import { createServiceValidationSchema } from "../../validationSchemas/schemas";
 
 const EditServiceModal = ({
   data,
@@ -33,7 +33,7 @@ const EditServiceModal = ({
       id: _id,
       service: data,
     };
-
+    console.log(updatedData);
     // Edit service to the database here
     try {
       const res = await editService(updatedData);

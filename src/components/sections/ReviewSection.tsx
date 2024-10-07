@@ -1,4 +1,4 @@
-import { MaxWidthWrapper } from "@/components";
+import { MaxWidthWrapper, Review } from "@/components";
 import { selectToken, selectUser } from "@/redux/features/auth/authSlice";
 import {
   useAddReviewMutation,
@@ -34,12 +34,11 @@ const ReviewSection = () => {
   const token = useAppSelector(selectToken);
   const user = useAppSelector(selectUser);
   const [addReview] = useAddReviewMutation();
-  const {
-    data: reviews = [],
-    isLoading,
-  } = useGetAllReviewsQuery({});
+  const { data: reviews = [], isLoading } = useGetAllReviewsQuery({});
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     if (feedback && rating && user) {
       const newReview = {
@@ -95,37 +94,15 @@ const ReviewSection = () => {
 
         <div className="my-10 ">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            <div className="col-span-2 flex flex-col md:flex-row gap-5 flex-wrap">
-              {reviews?.data?.slice(0, 2).map((review: TReview) => {
-                console.log("review", review);
-                return (
-                  <motion.div
-                    key={review._id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="flex-1"
-                  >
-                    <div className="bg-white p-2 h-[180px] border rounded-md">
-                      <div className="flex gap-5 p-0">
-                        <img
-                          src="/carwash.jpg"
-                          alt=""
-                          className="w-32 h-36 object-cover rounded-2xl"
-                        />
-                        <div className="flex flex-col justify-between">
-                          <p>{review.feedback.substring(0, 120)}</p>
-                          <div>
-                            <p className="font-semibold">
-                              {review.customerName}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
+            <div className="col-span-2">
+              <div
+                className="grid grid-cols-2 gap-5
+              "
+              >
+                {reviews?.data?.slice(0, 2).map((review: TReview) => {
+                  return <Review review={review} />;
+                })}
+              </div>
             </div>
 
             {/* revire form */}

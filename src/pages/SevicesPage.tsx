@@ -1,8 +1,4 @@
-import {
-  ComparisonTable,
-  MaxWidthWrapper,
-  ServiceCard
-} from "@/components";
+import { ComparisonTable, MaxWidthWrapper, ServiceCard } from "@/components";
 import { useGetServicesQuery } from "@/redux/features/services/serviceApi";
 import { useState } from "react";
 
@@ -11,7 +7,6 @@ const ServicesPage = () => {
   const [sortType, setSortType] = useState("name");
   const [filterPrice, setFilterPrice] = useState("");
   const [selectedServices, setSelectedServices] = useState<TService[]>([]);
-  const [selected, setSelected] = useState<TService[]>([]);
 
   const { data = [], isLoading } = useGetServicesQuery({});
   console.log("servicesData", data);
@@ -87,7 +82,7 @@ const ServicesPage = () => {
         />
       </div>
       <div className="container mx-auto p-4">
-        <h1 className="text-xl font-bold mb-1">Compare Car Wash Services</h1>
+        <h1 className="text-xl font-bold mb-1">Compare CleanRide Services</h1>
         <ComparisonTable selectedServices={selectedServices} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

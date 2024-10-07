@@ -17,6 +17,22 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: {
+        "gradient-top":
+          "linear-gradient(to bottom, hsl(var(--primary)), hsl(var(--secondary)))",
+        "gradient-bottom":
+          "linear-gradient(to top, hsl(var(--primary)), hsl(var(--secondary)))",
+        "gradient-left":
+          "linear-gradient(to right, hsl(var(--primary)), hsl(var(--secondary)))",
+        "gradient-right":
+          "linear-gradient(to left, hsl(var(--primary)), hsl(var(--secondary)))",
+        "gradient-diagonal-top-left":
+          "linear-gradient(to bottom right, hsl(var(--primary)), hsl(var(--secondary)))",
+        "gradient-diagonal-top-right":
+          "linear-gradient(to bottom left, hsl(var(--primary)), hsl(var(--secondary)))",
+        "gradient-diagonal-bottom-left": "linear-gradient",
+        "process": "url('https://ik.imagekit.io/waizul/carwash2.jpg')",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 
 const Logo = () => {
   return (
-    <div className="logo-clip w-[180px] cursor-pointer bg-sky-900 p-2">
+    <div className="logo-clip p-2">
       <Link to="/" className="flex flex-col justify-center gap-0">
-        <h1 className="text-2xl font-[700] flex items-center gap-3 ">
-          CleanRide <Car />
+      <div className="flex items-center gap-2">
+
+        <h1 className="text-blue-200 text-2xl font-bold flex items-center gap-3 tracking-widest">
+          CleanRide 
         </h1>
-        <p className="text-[10px]">Ride Clean, Ride Happy</p>
+        <Car className="text-cyan-100" size={34} />
+      </div>
+        <p className="text-cyan-100 text-[10px] tracking-wide">Ride Clean, Ride Happy</p>
       </Link>
     </div>
   );

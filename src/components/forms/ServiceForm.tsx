@@ -27,7 +27,7 @@ const ServiceForm = ({ form, onSubmit }: TFormProps) => {
   };
 
   const onSuccess = (res: any) => {
-    console.log("Success", res);
+    // console.log("Success", res);
 
     setThumbnailUrl(res.thumbnailUrl);
     form.setValue("imgUrl", res.url);
@@ -38,7 +38,8 @@ const ServiceForm = ({ form, onSubmit }: TFormProps) => {
     console.log("Upload-progress", progress);
   };
 
-  console.log(form.getValues());
+  // console.log(form.getValues());
+  console.log(isUploading)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
@@ -107,7 +108,7 @@ const ServiceForm = ({ form, onSubmit }: TFormProps) => {
             ref={ikUploadRef}
           />
           {ikUploadRef && (
-            <Button onClick={() => ikUploadRef?.current?.click()}>
+            <Button type='button' onClick={() => ikUploadRef?.current?.click()}>
               {isUploading ? "uploading..." : "Upload"}
             </Button>
           )}

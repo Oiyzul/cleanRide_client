@@ -5,9 +5,10 @@ import { ImageSlider } from "@/components";
 
 const BrandingSection = () => {
   return (
-    <div className="relative">
+    <section className="relative ">
       <ImageSlider />
-      <div className="absolute bottom-[15%] left-[7%] flex flex-col gap-7">
+
+      <div className="absolute bottom-[3%] left-[9%] flex flex-col gap-7">
         <p className="md:text-4xl font-bold text-white uppercase">
           Exclusive Offer
         </p>
@@ -21,8 +22,8 @@ const BrandingSection = () => {
           <Link to={"/services"}>Choose your service</Link>
         </Button>
       </div>
-      <div className="absolute bottom-0 right-0 w-[300px] md:w-[700px] h-20 bg-white custom-clip"></div>
-    </div>
+      <div className="absolute bottom-0 right-0 w-[300px] md:w-[700px] h-36 bg-white custom-clip"></div>
+    </section>
   );
 };
 

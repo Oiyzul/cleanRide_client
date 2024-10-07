@@ -5,6 +5,7 @@ import ReviewSection from "./sections/ReviewSection";
 import Navbar from "./navbars/Navbar";
 import DashboardNavbar from "./navbars/DashboardNavbar";
 import DashboardSidebar from "./navbars/DashboardSidebar";
+import FormInput from "./forms/FormInput";
 import BookingForm from "./forms/BookingForm";
 import ReviewForm from "./forms/ReviewForm";
 import ServiceForm from "./forms/ServiceForm";
@@ -22,6 +23,9 @@ import UserInfo from "./others/UserInfo";
 import UpdateUserInfo from "./others/UpdateUserInfo";
 import Logo from "./others/Logo";
 import ComparisonTable from "./others/ComparisonTable";
+import AboutUs from "./sections/AboutUs";
+import Process from "./sections/Process";
+import Review from "./others/Review";
 
 export {
   BrandingSection,
@@ -31,6 +35,7 @@ export {
   Navbar,
   DashboardNavbar,
   DashboardSidebar,
+  FormInput,
   BookingForm,
   ReviewForm,
   ServiceForm,
@@ -47,5 +52,8 @@ export {
   UserInfo,
   UpdateUserInfo,
   Logo,
-  ComparisonTable
+  ComparisonTable,
+  AboutUs,
+  Process,
+  Review,
 };

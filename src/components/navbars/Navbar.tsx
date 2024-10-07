@@ -1,17 +1,30 @@
+import { Logo, MaxWidthWrapper } from "@/components";
+import { cn } from "@/lib/utils";
+import { logout, selectUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { logout, selectUser } from "@/redux/features/auth/authSlice";
-import { Logo, MaxWidthWrapper } from "@/components";
 
 const Navbar = () => {
+  // const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
 
   const user = useAppSelector(selectUser);
 
   const dispatch = useAppDispatch();
 
+  // const handleScroll = () => {
+  //   if (window.scrollY > 200) {
+  //     setVisible(true);
+  //   } else {
+  //     setVisible(false);
+  //   }
+  // }
+  // useEffect(()=>{
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // },[])
   const onToggle = () => {
     setOpen((prev) => !prev);
   };
@@ -21,20 +34,20 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-gray-800 text-white relative">
+    <header className={cn("sticky top-0 z-50 text-white bg-black")}>
       <nav className="h-[80px] md:h-[80px] px-4 flex items-center p-2 md:p-4 xl:p-8">
         <MaxWidthWrapper>
           <div className="w-full flex items-center justify-between relative">
             <Logo />
             <div>
-              <ul className="hidden md:flex items-center gap-5 font-semibold">
-                <li className="text-gray-200 hover:text-white">
+              <ul className="hidden md:flex items-center gap-5 font-semibold text-white">
+                <li className="">
                   <Link to="/services">Services</Link>
                 </li>
 
                 {user?.role ? (
                   <>
-                    <li className="text-gray-200 hover:text-white">
+                    <li className="">
                       <Link to={`/${user.role}/dashboard`}>Dashboard</Link>
                     </li>
                     <li>
