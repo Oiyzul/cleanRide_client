@@ -79,7 +79,7 @@ const AddService = () => {
   } as any);
 
   const {
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting }
   } = form;
   // console.log(errors, isSubmitting, form.getValues());
   async function onSubmit(data: TAddServiceForm) {

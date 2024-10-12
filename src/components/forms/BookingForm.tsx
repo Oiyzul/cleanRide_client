@@ -54,7 +54,7 @@ const BookingForm = ({ form, onSubmit }: TFormProps) => {
             <FormItem>
               <FormLabel>Service Id</FormLabel>
               <FormControl>
-                <Input placeholder="service id" {...field} />
+                <Input placeholder="service id" {...field} disabled />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -68,7 +68,7 @@ const BookingForm = ({ form, onSubmit }: TFormProps) => {
             <FormItem>
               <FormLabel>Slot Id</FormLabel>
               <FormControl>
-                <Input placeholder="slot id" {...field} />
+                <Input placeholder="slot id" {...field} disabled />
               </FormControl>
               <FormMessage />
             </FormItem>

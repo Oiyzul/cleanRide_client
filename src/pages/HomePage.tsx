@@ -1,9 +1,11 @@
 import {
   AboutUs,
   BrandingSection,
+  CarCleaning,
   FeaturedServicesSection,
   Process,
   ReviewSection,
+  Statistics,
 } from "@/components";
 import { selectUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
@@ -17,6 +19,8 @@ const Home = () => {
       <AboutUs />
       <Process />
       <FeaturedServicesSection />
+      <CarCleaning />
+      <Statistics />
       <ReviewSection />
     </div>
   );

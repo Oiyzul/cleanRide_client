@@ -1,4 +1,4 @@
-import { MaxWidthWrapper, Review } from "@/components";
+import { MaxWidthWrapper } from "@/components";
 import { selectToken, selectUser } from "@/redux/features/auth/authSlice";
 import {
   useAddReviewMutation,
@@ -9,6 +9,14 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 
 const ReviewSection = () => {
   const [feedback, setFeedback] = useState("");
@@ -47,8 +55,9 @@ const ReviewSection = () => {
         rating,
         feedback,
       };
-      // setReviews([...reviews, newReview]);
+      console.log(newReview);
       const res = await addReview(newReview).unwrap();
+      console.log(res);
       if (res.success) {
         console.log("Review added successfully");
       }
@@ -70,7 +79,7 @@ const ReviewSection = () => {
       : 0;
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-5 pb-10">
+    <section className="relative pt-5 pb-10">
       {!token && (
         <motion.div
           className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center"
@@ -96,17 +105,51 @@ const ReviewSection = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             <div className="col-span-2">
               <div
-                className="grid grid-cols-2 gap-5
+                className="grid grid-cols-5 gap-5
               "
               >
-                {reviews?.data?.slice(0, 2).map((review: TReview) => {
-                  return <Review review={review} />;
-                })}
+                <Carousel className="col-span-4 w-full">
+                  <CarouselContent className="-ml-1">
+                    {reviews?.data?.map((review: TReview, index: number) => (
+                      <CarouselItem
+                        key={index}
+                        className="pl-1 md:basis-1/2 lg:basis-1/2"
+                      >
+                        <div className="p-1">
+                          <Card>
+                            <CardContent className="flex flex-col gap-2 aspect-square items-center justify-between p-6 w-full">
+                              <span className="text-2xl font-semibold">
+                                {review.customerName}
+                              </span>
+                              <p>{review.feedback}</p>
+                              <div className="flex mb-4">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                  <span
+                                    key={star}
+                                    className={`cursor-pointer text-2xl ${
+                                      review.rating >= star
+                                        ? "text-yellow-500"
+                                        : "text-gray-300"
+                                    }`}
+                                  >
+                                    ★
+                                  </span>
+                                ))}
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
               </div>
             </div>
 
             {/* revire form */}
-            <div className="col-span-1 border rounded-md">
+            <div className="col-span-1 border rounded-md h-full">
               <form className="bg-white p-2">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -117,6 +160,7 @@ const ReviewSection = () => {
                     className="w-full p-2 border rounded mb-4"
                     placeholder="Leave your feedback here..."
                     value={feedback}
+                    rows={7}
                     onChange={(e) => setFeedback(e.target.value)}
                   />
                   <div className="flex mb-4">

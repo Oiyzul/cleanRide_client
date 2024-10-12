@@ -10,7 +10,7 @@ const ComparisonTable = ({
   }
 
   return (
-    <table className="min-w-full bg-gray-900 text-white">
+    <table className="min-w-full bg-white rounded-xl border-none">
       <thead>
         <tr>
           <th className="py-2 border">Feature</th>
@@ -25,7 +25,7 @@ const ComparisonTable = ({
         <tr>
           <td className="border px-4 py-2">Price</td>
           {selectedServices.map((service) => (
-            <td key={service._id} className="border px-4 py-2">
+            <td key={service._id} className="border px-4 py-2 font-semibold">
               ${service.price}
             </td>
           ))}
@@ -33,18 +33,18 @@ const ComparisonTable = ({
         <tr>
           <td className="border px-4 py-2">Duration</td>
           {selectedServices.map((service) => (
-            <td key={service._id} className="border px-4 py-2">
+            <td key={service._id} className="border px-4 py-2 font-semibold">
               {service.duration} mins
             </td>
           ))}
         </tr>
         <tr>
           <td className="border px-4 py-2">Features</td>
-          {/* {selectedServices.map((service) => (
-            <td key={service._id} className="border px-4 py-2">
+          {selectedServices.map((service) => (
+            <td key={service._id} className="border px-4 py-2 font-semibold">
               {service?.features?.join(", ")}
             </td>
-          ))} */}
+          ))}
         </tr>
       </tbody>
     </table>

@@ -1,59 +1,32 @@
-import { Link } from "react-router-dom";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { Check, Clock, X } from "lucide-react";
 import { Button } from "../ui/button";
 
-const ServiceCard = ({
-  service,
-  index,
-  dataLength
-}: {
+type TProps = {
   service: TService;
-  index: number;
-  dataLength: number;
-}) => {
+  onSelect: (service: TService) => void;
+  selected: boolean;
+};
+const ServiceCardWithCompare = ({ service, onSelect, selected }: TProps) => {
   return (
-    <Card
-      style={
-        index === dataLength - 1
-          ? {
-              backgroundImage: `url(${service.imgUrl})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "100% 100%",
-            }
-          : { background: "inherit" }
-      }
-      className={cn(
-        "relative",
-        index === dataLength - 1 && "text-white z-10 font-semibold"
-      )}
-    >
-      <div
-        className={cn(
-          index === dataLength - 1 &&
-            "w-full h-full absolute top-0 -z-10 bg-black/40 rounded-md"
-        )}
-      ></div>
-      <CardHeader className="flex flex-col items-center">
-        <CardTitle
-          className={cn(
-            "text-red-700 text-xl",
-            index === dataLength - 1 && "text-white"
-          )}
-        >
+    <Card className={cn("relative")}>
+      <CardHeader className="flex flex-col items-center pb-2">
+        <CardTitle className={cn("text-red-700 text-xl")}>
           {service.name}
         </CardTitle>
         <p className="text-xl font-bold flex">
-          <span>$</span> <span className="text-5xl">{service.price}</span>
+          <span>$</span> <span className="text-4xl">{service.price}</span>
         </p>
         <p className="flex items-center gap-3">
-          <span
-            className={cn(
-              "text-red-500",
-              index === dataLength - 1 && "text-white"
-            )}
-          >
+          <span className={cn("text-red-700")}>
             <Clock size={17} />
           </span>{" "}
           <span className="font-semibold">
@@ -61,7 +34,7 @@ const ServiceCard = ({
           </span>
         </p>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2">
+      <CardContent className="flex flex-col gap-1">
         {service.features.map((feature) => (
           <div className="flex items-center gap-2">
             <span className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
@@ -80,16 +53,25 @@ const ServiceCard = ({
             </div>
           ))}
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-col items-center justify-between">
         <Button
           asChild
           className="uppercase bg-red-700 hover:bg-red-900 w-full"
         >
           <Link to={`/services/${service._id}`}>View Details</Link>
         </Button>
+        <Button
+          className={cn(
+            selected ? "bg-gray-800" : "",
+            "mt-2 text-white py-1 px-4 rounded w-full"
+          )}
+          onClick={() => onSelect(service)}
+        >
+          Compare
+        </Button>
       </CardFooter>
     </Card>
   );
 };
 
-export default ServiceCard;
+export default ServiceCardWithCompare;

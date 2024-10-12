@@ -17,7 +17,7 @@ import ImageSlider from "./others/ImageSlider";
 import MaxWidthWrapper from "./others/MaxWidthWrapper";
 import ScrollToTop from "./others/ScrollToTop";
 import ServiceCard from "./others/ServiceCard";
-import ServiceItem from "./others/ServiceIItem";
+import ServiceCardWithCompare from "./others/ServiceCardWithCompare";
 import UpcomingBookingItem from "./others/UpcomingBookingItem";
 import UserInfo from "./others/UserInfo";
 import UpdateUserInfo from "./others/UpdateUserInfo";
@@ -26,6 +26,8 @@ import ComparisonTable from "./others/ComparisonTable";
 import AboutUs from "./sections/AboutUs";
 import Process from "./sections/Process";
 import Review from "./others/Review";
+import CarCleaning from "./sections/CarCleaning";
+import Statistics from "./sections/Statistics";
 
 export {
   BrandingSection,
@@ -47,7 +49,7 @@ export {
   MaxWidthWrapper,
   ScrollToTop,
   ServiceCard,
-  ServiceItem,
+  ServiceCardWithCompare,
   UpcomingBookingItem as UpcomingBookings,
   UserInfo,
   UpdateUserInfo,
@@ -56,4 +58,6 @@ export {
   AboutUs,
   Process,
   Review,
+  CarCleaning,
+  Statistics,
 };

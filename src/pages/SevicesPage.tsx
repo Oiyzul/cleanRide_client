@@ -1,4 +1,4 @@
-import { ComparisonTable, MaxWidthWrapper, ServiceCard } from "@/components";
+import { ComparisonTable, MaxWidthWrapper, ServiceCardWithCompare } from "@/components";
 import { useGetServicesQuery } from "@/redux/features/services/serviceApi";
 import { useState } from "react";
 
@@ -54,9 +54,9 @@ const ServicesPage = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <MaxWidthWrapper className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Our Services</h1>
-      <div className="mb-6 flex flex-col md:flex-row gap-4">
+    <MaxWidthWrapper className="mt-5 mb-10">
+      <h1 className="text-3xl font-bold mb-4">Our Services</h1>
+      <div className="mb-2 flex flex-col md:flex-row gap-4">
         <input
           type="text"
           placeholder="Search services..."
@@ -81,13 +81,13 @@ const ServicesPage = () => {
           className="p-2 border rounded-md"
         />
       </div>
-      <div className="container mx-auto p-4">
+      <div className="py-4">
         <h1 className="text-xl font-bold mb-1">Compare CleanRide Services</h1>
         <ComparisonTable selectedServices={selectedServices} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-5 lg:grid-cols-4 lg:gap-10 xl:gap-20">
         {filteredServices?.map((service: TService) => (
-          <ServiceCard
+          <ServiceCardWithCompare
             key={service._id}
             service={service}
             onSelect={handleServiceCompare}

@@ -7,6 +7,24 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const ServiceDetails = ({ service }: { service: TService }) => {
+  return (
+    <div>
+      {!service && <div>No service found.</div>}
+      <h1 className="text-3xl font-bold mb-4">{service.name}</h1>
+      <p className="mb-4 md:w-2/3 lg:w-full text-lg text-gray-500">{service.description}</p>
+      <p className="mb-2 text-xl">Price: <span className="font-semibold">${service.price}</span> </p>
+      <p className="mb-4 text-lg">Duration: <span className="font-semibold">{service.duration} mins</span> </p>
+      <div>
+        <p className="text-xl font-semibold ">Features:</p>
+        {service.features.map((feature, index:number) => <p key={feature} className="font-semibold">{index + 1}. {feature}</p>)}
+      </div>
+
+      {/* error handling */}
+    </div>
+  );
+};
+
+const ServiceSlots = ({ service }: { service: TService }) => {
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
@@ -28,29 +46,13 @@ const ServiceDetails = ({ service }: { service: TService }) => {
 
   const handleSlotClick = (slot: TSlot) => {
     setSelectedSlot(slot);
-    console.log("selected slot", selectedSlot);
+    console.log("selected slot", selectedSlot, slot);
   };
 
-  // if (isLoading) return <div>Loading available slots...</div>;
-  // if (!service) return <div>No service found.</div>;
-  // if (!data.data?.length) return <div>No slots available for this date.</div>;
-  // console.log(service);
+  if (isLoading) <div>Loading available slots...</div>;
 
   return (
-    <div className="p-6">
-      {/* make seperate components for service details and time slots */}
-      <h1 className="text-3xl font-bold mb-4">{service.name}</h1>
-      <p className="mb-4">{service.description}</p>
-      <p className="mb-4">Price: ${service.price}</p>
-      <p className="mb-4">Duration: {service.duration} mins</p>
-
-      {/* error handling */}
-      {!service ? (
-        <div>No service found.</div>
-      ) : isLoading ? (
-        <div>Loading available slots...</div>
-      ) : null}
-
+    <div className="">
       <div className="mb-4">
         <label className="block mb-2">Select Date:</label>
         <input
@@ -101,13 +103,18 @@ const ServiceDetailsPage = () => {
   const { id } = useParams();
   const { data = [], isLoading } = useGetSingleServiceQuery(id as string);
   return (
-    <MaxWidthWrapper className="p-6">
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <ServiceDetails service={data.data} />
-      )}
-    </MaxWidthWrapper>
+    <section className="section">
+      <MaxWidthWrapper className="mt-10">
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-10 xl:gap-20">
+            <ServiceDetails service={data.data} />
+            <ServiceSlots service={data.data} />
+          </div>
+        )}
+      </MaxWidthWrapper>
+    </section>
   );
 };
 

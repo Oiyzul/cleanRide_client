@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const FooterSection = () => {
   return (
-    <footer className="bg-gray-900 text-white py-8">
+    <footer className="bg-black text-white py-8">
       <MaxWidthWrapper className="">
         <div className="flex flex-wrap justify-between">
           <div className="w-full md:w-1/3 mb-6 md:mb-0">

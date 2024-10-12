@@ -22,7 +22,7 @@ const BookingPage = () => {
     date,
     service: { _id: serviceId, name, description, price, duration },
   } = location.state || {};
-
+  console.log(slotId)
   const form = useForm<z.infer<typeof createBookingValidationSchema>>({
     resolver: zodResolver(createBookingValidationSchema),
     defaultValues: {
@@ -78,7 +78,7 @@ const BookingPage = () => {
               <strong>Duration:</strong> {duration} minutes
             </p>
             <p className="mb-2">
-              <strong>Price:</strong> {price} BDT
+              <strong>Price:</strong> ${price}
             </p>
           </div>
           {/* Right Side */}
